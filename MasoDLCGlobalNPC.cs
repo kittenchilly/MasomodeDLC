@@ -107,134 +107,140 @@ namespace MasomodeDLC
 
         public override void ScaleExpertStats(NPC npc, int numPlayers, float bossLifeScale)
         {
-            if
-            (
-            npc.type == Thorium.NPCType("TheGrandThunderBirdv2") ||
-            npc.type == Thorium.NPCType("Hatchling")
-            )
+            if (FargoSoulsWorld.MasochistMode)
             {
-                npc.lifeMax = (int)(npc.lifeMax * (1 + MasoDLCWorld.ThunderBirdCount * .025));
-                npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.ThunderBirdCount * .0125));
-            }
-            else if
-            (
-            npc.type == Thorium.NPCType("QueenJelly") ||
-            npc.type == Thorium.NPCType("DistractJelly") ||
-            npc.type == Thorium.NPCType("SpittingJelly") ||
-            npc.type == Thorium.NPCType("ZealousJelly")
-            )
-            {
-                npc.lifeMax = (int)(npc.lifeMax * (1 + MasoDLCWorld.JellyCount * .025));
-                npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.JellyCount * .0125));
-            }
-            else if
-            (
-            npc.type == Thorium.NPCType("Viscount") ||
-            npc.type == Thorium.NPCType("ViscountBaby")
-            )
-            {
-                npc.lifeMax = (int)(npc.lifeMax * (1 + MasoDLCWorld.VisCount * .025));
-                npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.VisCount * .0125));
-            }
-            else if
-            (
-            npc.type == Thorium.NPCType("GraniteEnergyStorm") ||
-            npc.type == Thorium.NPCType("EncroachingEnergy") ||
-            npc.type == Thorium.NPCType("EnergyBarrier") ||
-            npc.type == Thorium.NPCType("EnergyCanduit") ||
-            npc.type == Thorium.NPCType("GraniteEnergy")
-            )
-            {
-                npc.lifeMax = (int)(npc.lifeMax * (1 + MasoDLCWorld.GraniteCount * .025));
-                npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.GraniteCount * .0125));
-            }
-            else if
-            (
-            npc.type == Thorium.NPCType("TheBuriedWarrior") ||
-            npc.type == Thorium.NPCType("TheBuriedWarrior1") ||
-            npc.type == Thorium.NPCType("TheBuriedWarrior2") ||
-            npc.type == Thorium.NPCType("BuriedVolley")
-            )
-            {
-                npc.lifeMax = (int)(npc.lifeMax * (1 + MasoDLCWorld.ChampionCount * .025));
-                npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.ChampionCount * .0125));
-            }
-            else if
-            (
-            npc.type == Thorium.NPCType("ThePrimeScouter") ||
-            npc.type == Thorium.NPCType("BioCore") ||
-            npc.type == Thorium.NPCType("CryoCore") ||
-            npc.type == Thorium.NPCType("PyroCore")
-            )
-            {
-                npc.lifeMax = (int)(npc.lifeMax * (1 + MasoDLCWorld.ScouterCount * .025));
-                npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.ScouterCount * .0125));
-            }
-            else if
-            (
-            npc.type == Thorium.NPCType("BoreanStrider") ||
-            npc.type == Thorium.NPCType("BoreanStriderPopped") ||
-            npc.type == Thorium.NPCType("BoreanMyte1") ||
-            npc.type == Thorium.NPCType("BoreanHopper")
-            )
-            {
-                npc.lifeMax = (int)(npc.lifeMax * (1 + MasoDLCWorld.StriderCount * .025));
-                npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.StriderCount * .0125));
-            }
-            else if
-            (
-            npc.type == Thorium.NPCType("FallenDeathBeholder") ||
-            npc.type == Thorium.NPCType("FallenDeathBeholder2") ||
-            npc.type == Thorium.NPCType("EnemyBeholder")
-            )
-            {
-                npc.lifeMax = (int)(npc.lifeMax * (1 + MasoDLCWorld.BeholderCount * .025));
-                npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.BeholderCount * .0125));
-            }
-            else if
-            (
-            npc.type == Thorium.NPCType("Lich") ||
-            npc.type == Thorium.NPCType("LichHeadless") ||
-            npc.type == Thorium.NPCType("ThousandSoulPhalactry")
-            )
-            {
-                npc.lifeMax = (int)(npc.lifeMax * (1 + MasoDLCWorld.LichCount * .025));
-                npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.LichCount * .0125));
-            }
-            else if
-            (
-            npc.type == Thorium.NPCType("Abyssion") ||
-            npc.type == Thorium.NPCType("AbyssionCracked") ||
-            npc.type == Thorium.NPCType("AbyssionReleased") ||
-            npc.type == Thorium.NPCType("AbyssalSpawn")
-            )
-            {
-                npc.lifeMax = (int)(npc.lifeMax * (1 + MasoDLCWorld.AbyssionCount * .025));
-                npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.AbyssionCount * .0125));
-            }
-            else if
-            (
-            npc.type == Thorium.NPCType("RealityBreaker") ||
-            npc.type == Thorium.NPCType("Aquaius") ||
-            npc.type == Thorium.NPCType("Aquaius2") ||
-            npc.type == Thorium.NPCType("AquaiusBubble") ||
-            npc.type == Thorium.NPCType("AquaiusBubblePrime") ||
-            npc.type == Thorium.NPCType("AquaTitan") ||
-            npc.type == Thorium.NPCType("BoundlessEntity") ||
-            npc.type == Thorium.NPCType("DeathTitan") ||
-            npc.type == Thorium.NPCType("DespairSpirit") ||
-            npc.type == Thorium.NPCType("DreadSpirit") ||
-            npc.type == Thorium.NPCType("OmegaSigil") ||
-            npc.type == Thorium.NPCType("Omnicide") ||
-            npc.type == Thorium.NPCType("RealityEaterHead") ||
-            npc.type == Thorium.NPCType("RealityEaterBody") ||
-            npc.type == Thorium.NPCType("RealityEaterTail") ||
-            npc.type == Thorium.NPCType("SlagFury") ||
-            npc.type == Thorium.NPCType("SlagTitan")
-            )
-            {
-                npc.lifeMax = (int)(npc.lifeMax * (1 + MasoDLCWorld.RagnarokCount * .025));
-                npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.RagnarokCount * .0125));
+                if (Thorium != null)
+                {
+                    if
+                    (
+                    npc.type == Thorium.NPCType("TheGrandThunderBirdv2") ||
+                    npc.type == Thorium.NPCType("Hatchling")
+                    )
+                    {
+                        npc.lifeMax = (int)(npc.lifeMax * (1 + MasoDLCWorld.ThunderBirdCount * .025));
+                        npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.ThunderBirdCount * .0125));
+                    }
+                    else if
+                    (
+                    npc.type == Thorium.NPCType("QueenJelly") ||
+                    npc.type == Thorium.NPCType("DistractJelly") ||
+                    npc.type == Thorium.NPCType("SpittingJelly") ||
+                    npc.type == Thorium.NPCType("ZealousJelly")
+                    )
+                    {
+                        npc.lifeMax = (int)(npc.lifeMax * (1 + MasoDLCWorld.JellyCount * .025));
+                        npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.JellyCount * .0125));
+                    }
+                    else if
+                    (
+                    npc.type == Thorium.NPCType("Viscount") ||
+                    npc.type == Thorium.NPCType("ViscountBaby")
+                    )
+                    {
+                        npc.lifeMax = (int)(npc.lifeMax * (1 + MasoDLCWorld.VisCount * .025));
+                        npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.VisCount * .0125));
+                    }
+                    else if
+                    (
+                    npc.type == Thorium.NPCType("GraniteEnergyStorm") ||
+                    npc.type == Thorium.NPCType("EncroachingEnergy") ||
+                    npc.type == Thorium.NPCType("EnergyBarrier") ||
+                    npc.type == Thorium.NPCType("EnergyCanduit") ||
+                    npc.type == Thorium.NPCType("GraniteEnergy")
+                    )
+                    {
+                        npc.lifeMax = (int)(npc.lifeMax * (1 + MasoDLCWorld.GraniteCount * .025));
+                        npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.GraniteCount * .0125));
+                    }
+                    else if
+                    (
+                    npc.type == Thorium.NPCType("TheBuriedWarrior") ||
+                    npc.type == Thorium.NPCType("TheBuriedWarrior1") ||
+                    npc.type == Thorium.NPCType("TheBuriedWarrior2") ||
+                    npc.type == Thorium.NPCType("BuriedVolley")
+                    )
+                    {
+                        npc.lifeMax = (int)(npc.lifeMax * (1 + MasoDLCWorld.ChampionCount * .025));
+                        npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.ChampionCount * .0125));
+                    }
+                    else if
+                    (
+                    npc.type == Thorium.NPCType("ThePrimeScouter") ||
+                    npc.type == Thorium.NPCType("BioCore") ||
+                    npc.type == Thorium.NPCType("CryoCore") ||
+                    npc.type == Thorium.NPCType("PyroCore")
+                    )
+                    {
+                        npc.lifeMax = (int)(npc.lifeMax * (1 + MasoDLCWorld.ScouterCount * .025));
+                        npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.ScouterCount * .0125));
+                    }
+                    else if
+                    (
+                    npc.type == Thorium.NPCType("BoreanStrider") ||
+                    npc.type == Thorium.NPCType("BoreanStriderPopped") ||
+                    npc.type == Thorium.NPCType("BoreanMyte1") ||
+                    npc.type == Thorium.NPCType("BoreanHopper")
+                    )
+                    {
+                        npc.lifeMax = (int)(npc.lifeMax * (1 + MasoDLCWorld.StriderCount * .025));
+                        npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.StriderCount * .0125));
+                    }
+                    else if
+                    (
+                    npc.type == Thorium.NPCType("FallenDeathBeholder") ||
+                    npc.type == Thorium.NPCType("FallenDeathBeholder2") ||
+                    npc.type == Thorium.NPCType("EnemyBeholder")
+                    )
+                    {
+                        npc.lifeMax = (int)(npc.lifeMax * (1 + MasoDLCWorld.BeholderCount * .025));
+                        npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.BeholderCount * .0125));
+                    }
+                    else if
+                    (
+                    npc.type == Thorium.NPCType("Lich") ||
+                    npc.type == Thorium.NPCType("LichHeadless") ||
+                    npc.type == Thorium.NPCType("ThousandSoulPhalactry")
+                    )
+                    {
+                        npc.lifeMax = (int)(npc.lifeMax * (1 + MasoDLCWorld.LichCount * .025));
+                        npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.LichCount * .0125));
+                    }
+                    else if
+                    (
+                    npc.type == Thorium.NPCType("Abyssion") ||
+                    npc.type == Thorium.NPCType("AbyssionCracked") ||
+                    npc.type == Thorium.NPCType("AbyssionReleased") ||
+                    npc.type == Thorium.NPCType("AbyssalSpawn")
+                    )
+                    {
+                        npc.lifeMax = (int)(npc.lifeMax * (1 + MasoDLCWorld.AbyssionCount * .025));
+                        npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.AbyssionCount * .0125));
+                    }
+                    else if
+                    (
+                    npc.type == Thorium.NPCType("RealityBreaker") ||
+                    npc.type == Thorium.NPCType("Aquaius") ||
+                    npc.type == Thorium.NPCType("Aquaius2") ||
+                    npc.type == Thorium.NPCType("AquaiusBubble") ||
+                    npc.type == Thorium.NPCType("AquaiusBubblePrime") ||
+                    npc.type == Thorium.NPCType("AquaTitan") ||
+                    npc.type == Thorium.NPCType("BoundlessEntity") ||
+                    npc.type == Thorium.NPCType("DeathTitan") ||
+                    npc.type == Thorium.NPCType("DespairSpirit") ||
+                    npc.type == Thorium.NPCType("DreadSpirit") ||
+                    npc.type == Thorium.NPCType("OmegaSigil") ||
+                    npc.type == Thorium.NPCType("Omnicide") ||
+                    npc.type == Thorium.NPCType("RealityEaterHead") ||
+                    npc.type == Thorium.NPCType("RealityEaterBody") ||
+                    npc.type == Thorium.NPCType("RealityEaterTail") ||
+                    npc.type == Thorium.NPCType("SlagFury") ||
+                    npc.type == Thorium.NPCType("SlagTitan")
+                    )
+                    {
+                        npc.lifeMax = (int)(npc.lifeMax * (1 + MasoDLCWorld.RagnarokCount * .025));
+                        npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.RagnarokCount * .0125));
+                    }
+                }
             }
         }
 

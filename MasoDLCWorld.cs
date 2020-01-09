@@ -1,8 +1,5 @@
 using System.Collections.Generic;
 using System.IO;
-using Terraria;
-using Terraria.GameContent.Events;
-using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
@@ -93,6 +90,7 @@ namespace MasomodeDLC
             AbyssionCount = reader.ReadInt32();
             RagnarokCount = reader.ReadInt32();
         }
+
         public override void NetSend(BinaryWriter writer)
         {
             writer.Write(ThunderBirdCount);

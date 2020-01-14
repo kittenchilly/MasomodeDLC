@@ -1,6 +1,7 @@
 using FargowiltasSouls;
 using FargowiltasSouls.NPCs;
 using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent.Events;
@@ -13,6 +14,9 @@ namespace MasomodeDLC
     {
         private readonly Mod Thorium = ModLoader.GetMod("ThoriumMod");
         private readonly Mod FargoSouls = ModLoader.GetMod("FargowiltasSouls");
+        private int Stop = 0;
+        public int Counter = 0;
+        public int CachedDamage;
 
         public override bool InstancePerEntity
         {
@@ -240,16 +244,73 @@ namespace MasomodeDLC
                         npc.lifeMax = (int)(npc.lifeMax * (1 + MasoDLCWorld.RagnarokCount * .025));
                         npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.RagnarokCount * .0125));
                     }
+                    CachedDamage = npc.damage;
                 }
             }
         }
 
         public override bool PreAI(NPC npc)
         {
+            Player player = Main.player[npc.target];
             if (FargoSoulsWorld.MasochistMode)
             {
                 if (Thorium != null)
                 {
+                    if (npc.type == Thorium.NPCType("TheGrandThunderBirdv2"))
+                    {
+                        if (npc.ai[0] < 5f)
+                        {
+                            if (npc.ai[3] == 0)
+                            {
+                                if (npc.ai[2] > 59f && npc.ai[2] < 61f)
+                                {
+                                    if (Main.rand.Next(2) == 0)
+                                    {
+                                        Projectile.NewProjectile(player.Center.X - 800f + (float)Main.rand.Next(-0x1E, 0x1E), player.Center.Y + (float)Main.rand.Next(-0xC8, 0xC8), 10f, 0f, Thorium.ProjectileType("GrandThunderBirdZap"), 0xC, 3f, 0xFF, 0f, 0f);
+                                        Projectile.NewProjectile(player.Center.X - 800f + (float)Main.rand.Next(-0x1E, 0x1E), player.Center.Y + (float)Main.rand.Next(-0xC8, 0xC8), 10f, 0f, Thorium.ProjectileType("GrandThunderBirdZap"), 0xC, 3f, 0xFF, 0f, 0f);
+                                        Projectile.NewProjectile(player.Center.X - 800f + (float)Main.rand.Next(-0x1E, 0x1E), player.Center.Y + (float)Main.rand.Next(-0xC8, 0xC8), 10f, 0f, Thorium.ProjectileType("GrandThunderBirdZap"), 0xC, 3f, 0xFF, 0f, 0f);
+                                        Projectile.NewProjectile(player.Center.X - 800f + (float)Main.rand.Next(-0x1E, 0x1E), player.Center.Y + (float)Main.rand.Next(-0xC8, 0xC8), 10f, 0f, Thorium.ProjectileType("GrandThunderBirdZap"), 0xC, 3f, 0xFF, 0f, 0f);
+                                        Projectile.NewProjectile(player.Center.X - 800f + (float)Main.rand.Next(-0x1E, 0x1E), player.Center.Y + (float)Main.rand.Next(-0xC8, 0xC8), 10f, 0f, Thorium.ProjectileType("GrandThunderBirdZap"), 0xC, 3f, 0xFF, 0f, 0f);
+                                        Projectile.NewProjectile(player.Center.X - 800f + (float)Main.rand.Next(-0x1E, 0x1E), player.Center.Y + (float)Main.rand.Next(-0xC8, 0xC8), 10f, 0f, Thorium.ProjectileType("GrandThunderBirdZap"), 0xC, 3f, 0xFF, 0f, 0f);
+                                        Projectile.NewProjectile(player.Center.X - 800f + (float)Main.rand.Next(-0x1E, 0x1E), player.Center.Y + (float)Main.rand.Next(-0xC8, 0xC8), 10f, 0f, Thorium.ProjectileType("GrandThunderBirdZap"), 0xC, 3f, 0xFF, 0f, 0f);
+                                        Projectile.NewProjectile(player.Center.X - 800f + (float)Main.rand.Next(-0x1E, 0x1E), player.Center.Y + (float)Main.rand.Next(-0xC8, 0xC8), 10f, 0f, Thorium.ProjectileType("GrandThunderBirdZap"), 0xC, 3f, 0xFF, 0f, 0f);
+                                        Projectile.NewProjectile(player.Center.X - 800f + (float)Main.rand.Next(-0x1E, 0x1E), player.Center.Y, 8f, 0f, base.mod.ProjectileType("GrandThunderBirdZap"), 0xC, 3f, 0xFF, 0f, 0f);
+                                    }
+                                    else
+                                    {
+                                        Projectile.NewProjectile(player.Center.X + 800f + (float)Main.rand.Next(-0x1E, 0x1E), player.Center.Y + (float)Main.rand.Next(-0xC8, 0xC8), -10f, 0f, Thorium.ProjectileType("GrandThunderBirdZap"), 0xC, 3f, 0xFF, 0f, 0f);
+                                        Projectile.NewProjectile(player.Center.X + 800f + (float)Main.rand.Next(-0x1E, 0x1E), player.Center.Y + (float)Main.rand.Next(-0xC8, 0xC8), -10f, 0f, Thorium.ProjectileType("GrandThunderBirdZap"), 0xC, 3f, 0xFF, 0f, 0f);
+                                        Projectile.NewProjectile(player.Center.X + 800f + (float)Main.rand.Next(-0x1E, 0x1E), player.Center.Y + (float)Main.rand.Next(-0xC8, 0xC8), -10f, 0f, Thorium.ProjectileType("GrandThunderBirdZap"), 0xC, 3f, 0xFF, 0f, 0f);
+                                        Projectile.NewProjectile(player.Center.X + 800f + (float)Main.rand.Next(-0x1E, 0x1E), player.Center.Y + (float)Main.rand.Next(-0xC8, 0xC8), -10f, 0f, Thorium.ProjectileType("GrandThunderBirdZap"), 0xC, 3f, 0xFF, 0f, 0f);
+                                        Projectile.NewProjectile(player.Center.X + 800f + (float)Main.rand.Next(-0x1E, 0x1E), player.Center.Y + (float)Main.rand.Next(-0xC8, 0xC8), -10f, 0f, Thorium.ProjectileType("GrandThunderBirdZap"), 0xC, 3f, 0xFF, 0f, 0f);
+                                        Projectile.NewProjectile(player.Center.X + 800f + (float)Main.rand.Next(-0x1E, 0x1E), player.Center.Y + (float)Main.rand.Next(-0xC8, 0xC8), -10f, 0f, Thorium.ProjectileType("GrandThunderBirdZap"), 0xC, 3f, 0xFF, 0f, 0f);
+                                        Projectile.NewProjectile(player.Center.X + 800f + (float)Main.rand.Next(-0x1E, 0x1E), player.Center.Y + (float)Main.rand.Next(-0xC8, 0xC8), -10f, 0f, Thorium.ProjectileType("GrandThunderBirdZap"), 0xC, 3f, 0xFF, 0f, 0f);
+                                        Projectile.NewProjectile(player.Center.X + 800f + (float)Main.rand.Next(-0x1E, 0x1E), player.Center.Y + (float)Main.rand.Next(-0xC8, 0xC8), -10f, 0f, Thorium.ProjectileType("GrandThunderBirdZap"), 0xC, 3f, 0xFF, 0f, 0f);
+                                        Projectile.NewProjectile(player.Center.X + 800f + (float)Main.rand.Next(-0x1E, 0x1E), player.Center.Y, 8f, 0f, base.mod.ProjectileType("GrandThunderBirdZap"), 0xC, 3f, 0xFF, 0f, 0f);
+                                    }
+                                }
+                            }
+                            else if (npc.ai[3] == 2f)
+                            {
+                                if (npc.ai[2] > 59f && npc.ai[2] % 60f == 0f)
+                                {
+                                    NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y - 0xA, Thorium.NPCType("Hatchling"), 0, (float)npc.whoAmI, 0f, 0f, 0f, 0xFF);
+                                }
+                            }
+                        }
+                    }
+                    if (npc.type == Thorium.NPCType("Hatchling"))
+                    {
+                        Counter++;
+                        if (Counter >= 300)
+                        {
+                            Vector2 vector3 = Main.player[npc.target].Center + new Vector2(npc.Center.X, npc.Center.Y);
+                            Vector2 vector4 = npc.Center + new Vector2(npc.Center.X, npc.Center.Y);
+                            float num = (float)Math.Atan2((double)(vector4.Y - vector3.Y), (double)(vector4.X - vector3.X));
+                            Main.PlaySound(3, (int)npc.position.X, (int)npc.position.Y, 0x1C, 1f, 0f);
+                            Projectile.NewProjectile(npc.Center.X, npc.Center.Y - 30f, (float)(Math.Cos((double)num) * 10.0 * -1.0), (float)(Math.Sin((double)num) * 10.0 * -1.0),Thorium.ProjectileType("GrandThunderBirdZap"), 0xF, 0f, 0, 0f, 0f); Counter = 0;
+                        }
+                    }
                     if
                     (
                     npc.type == Thorium.NPCType("GoblinDrummer") ||
@@ -270,12 +331,155 @@ namespace MasomodeDLC
             return true;
         }
 
+        public override void PostAI(NPC npc)
+        {
+            if (FargoSoulsWorld.MasochistMode)
+            {
+                if (Thorium != null)
+                {
+                    if (npc.damage != CachedDamage)
+                    {
+                        if
+                        (
+                        npc.type == Thorium.NPCType("TheGrandThunderBirdv2") ||
+                        npc.type == Thorium.NPCType("Hatchling")
+                        )
+                        {
+                            npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.ThunderBirdCount * .0125));
+                        }
+                        else if
+                        (
+                        npc.type == Thorium.NPCType("QueenJelly") ||
+                        npc.type == Thorium.NPCType("DistractJelly") ||
+                        npc.type == Thorium.NPCType("SpittingJelly") ||
+                        npc.type == Thorium.NPCType("ZealousJelly")
+                        )
+                        {
+                            npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.JellyCount * .0125));
+                        }
+                        else if
+                        (
+                        npc.type == Thorium.NPCType("Viscount") ||
+                        npc.type == Thorium.NPCType("ViscountBaby")
+                        )
+                        {
+                            npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.VisCount * .0125));
+                        }
+                        else if
+                        (
+                        npc.type == Thorium.NPCType("GraniteEnergyStorm") ||
+                        npc.type == Thorium.NPCType("EncroachingEnergy") ||
+                        npc.type == Thorium.NPCType("EnergyBarrier") ||
+                        npc.type == Thorium.NPCType("EnergyCanduit") ||
+                        npc.type == Thorium.NPCType("GraniteEnergy")
+                        )
+                        {
+                            npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.GraniteCount * .0125));
+                        }
+                        else if
+                        (
+                        npc.type == Thorium.NPCType("TheBuriedWarrior") ||
+                        npc.type == Thorium.NPCType("TheBuriedWarrior1") ||
+                        npc.type == Thorium.NPCType("TheBuriedWarrior2") ||
+                        npc.type == Thorium.NPCType("BuriedVolley")
+                        )
+                        {
+                            npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.ChampionCount * .0125));
+                        }
+                        else if
+                        (
+                        npc.type == Thorium.NPCType("ThePrimeScouter") ||
+                        npc.type == Thorium.NPCType("BioCore") ||
+                        npc.type == Thorium.NPCType("CryoCore") ||
+                        npc.type == Thorium.NPCType("PyroCore")
+                        )
+                        {
+                            npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.ScouterCount * .0125));
+                        }
+                        else if
+                        (
+                        npc.type == Thorium.NPCType("BoreanStrider") ||
+                        npc.type == Thorium.NPCType("BoreanStriderPopped") ||
+                        npc.type == Thorium.NPCType("BoreanMyte1") ||
+                        npc.type == Thorium.NPCType("BoreanHopper")
+                        )
+                        {
+                            npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.StriderCount * .0125));
+                        }
+                        else if
+                        (
+                        npc.type == Thorium.NPCType("FallenDeathBeholder") ||
+                        npc.type == Thorium.NPCType("FallenDeathBeholder2") ||
+                        npc.type == Thorium.NPCType("EnemyBeholder")
+                        )
+                        {
+                            npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.BeholderCount * .0125));
+                        }
+                        else if
+                        (
+                        npc.type == Thorium.NPCType("Lich") ||
+                        npc.type == Thorium.NPCType("LichHeadless") ||
+                        npc.type == Thorium.NPCType("ThousandSoulPhalactry")
+                        )
+                        {
+                            npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.LichCount * .0125));
+                        }
+                        else if
+                        (
+                        npc.type == Thorium.NPCType("Abyssion") ||
+                        npc.type == Thorium.NPCType("AbyssionCracked") ||
+                        npc.type == Thorium.NPCType("AbyssionReleased") ||
+                        npc.type == Thorium.NPCType("AbyssalSpawn")
+                        )
+                        {
+                            npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.AbyssionCount * .0125));
+                        }
+                        else if
+                        (
+                        npc.type == Thorium.NPCType("RealityBreaker") ||
+                        npc.type == Thorium.NPCType("Aquaius") ||
+                        npc.type == Thorium.NPCType("Aquaius2") ||
+                        npc.type == Thorium.NPCType("AquaiusBubble") ||
+                        npc.type == Thorium.NPCType("AquaiusBubblePrime") ||
+                        npc.type == Thorium.NPCType("AquaTitan") ||
+                        npc.type == Thorium.NPCType("BoundlessEntity") ||
+                        npc.type == Thorium.NPCType("DeathTitan") ||
+                        npc.type == Thorium.NPCType("DespairSpirit") ||
+                        npc.type == Thorium.NPCType("DreadSpirit") ||
+                        npc.type == Thorium.NPCType("OmegaSigil") ||
+                        npc.type == Thorium.NPCType("Omnicide") ||
+                        npc.type == Thorium.NPCType("RealityEaterHead") ||
+                        npc.type == Thorium.NPCType("RealityEaterBody") ||
+                        npc.type == Thorium.NPCType("RealityEaterTail") ||
+                        npc.type == Thorium.NPCType("SlagFury") ||
+                        npc.type == Thorium.NPCType("SlagTitan")
+                        )
+                        {
+                            npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.RagnarokCount * .0125));
+                        }
+                        CachedDamage = npc.damage;
+                        Main.NewText(npc.damage);
+                    }
+                }
+            }
+        }
+
         public override void OnHitPlayer(NPC npc, Player target, int damage, bool crit)
         {
             if (FargoSoulsWorld.MasochistMode)
             {
                 if (Thorium != null)
                 {
+                    if (npc.type == Thorium.NPCType("TheGrandThunderBirdv2"))
+                    {
+                        if (npc.ai[2] > 300f)
+                        {
+                            target.AddBuff(Thorium.BuffType("Staggered"), 600);
+                            Vector2 velocity = Vector2.Normalize(target.Center - npc.Center) * 30;
+                            target.velocity = velocity;
+                        }
+                        target.AddBuff(BuffID.Electrified, 300);
+                    }
                     if (npc.type == Thorium.NPCType("Biter"))
                     {
                         target.AddBuff(FargoSouls.BuffType("Rotting"), 300);
@@ -293,6 +497,7 @@ namespace MasomodeDLC
                     }
                 }
             }
+            Main.NewText(damage);
         }
 
         public override bool CheckDead(NPC npc)
@@ -460,6 +665,46 @@ namespace MasomodeDLC
                             }
                         }
                     }
+                }
+            }
+        }
+
+        private void Shoot(NPC npc, int delay, float distance, int speed, int proj, int dmg, float kb, bool recolor = false, bool hostile = false)
+        {
+            int t = npc.HasPlayerTarget ? npc.target : npc.FindClosestPlayer();
+            if (t == -1)
+                return;
+
+            Player player = Main.player[t];
+            //npc facing player target or if already started attack
+            if (player.active && !player.dead && npc.direction == (Math.Sign(player.position.X - npc.position.X)) || Stop > 0)
+            {
+                //start the pause
+                if (delay != 0 && Stop == 0)
+                {
+                    Stop = delay;
+                }
+                //half way through start attack
+                else if (delay == 0 || Stop == delay / 2)
+                {
+                    Vector2 velocity = Vector2.Normalize(player.Center - npc.Center) * speed;
+                    if (npc.Distance(player.Center) < distance)
+                        velocity = Vector2.Normalize(player.Center - npc.Center) * speed;
+                    else //player too far away now, just shoot straight ahead
+                        velocity = new Vector2(npc.direction * speed, 0);
+
+                    int p = Projectile.NewProjectile(npc.Center, velocity, proj, dmg, kb, Main.myPlayer);
+                    if (p < 1000)
+                    {
+                        if (recolor)
+                            Main.projectile[p].GetGlobalProjectile<FargowiltasSouls.Projectiles.FargoGlobalProjectile>().IsRecolor = true;
+                        if (hostile)
+                        {
+                            Main.projectile[p].friendly = false;
+                            Main.projectile[p].hostile = true;
+                        }
+                    }
+                    Counter = 0;
                 }
             }
         }

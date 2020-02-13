@@ -870,6 +870,14 @@ namespace MasomodeDLC.Thorium
             return true;
         }
 
+        public override void SpawnNPC(int npc, int tileX, int tileY)
+        {
+            if (Main.npc[npc].type == NPCType<TheGrandThunderBirdv2>() && Main.npc[npc].boss)
+            {
+                Main.npc[npc].ai[2] = 60f;
+            }
+        }
+
         private void Shoot(NPC npc, int delay, float distance, int speed, int proj, int dmg, float kb, bool recolor = false, bool hostile = false)
         {
             int t = npc.HasPlayerTarget ? npc.target : npc.FindClosestPlayer();

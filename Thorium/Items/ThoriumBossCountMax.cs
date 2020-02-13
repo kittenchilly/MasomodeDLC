@@ -1,12 +1,16 @@
+using FargowiltasSouls;
 using Terraria;
 using Terraria.ModLoader;
-using Terraria.Localization;
-using MasomodeDLC;
 
-namespace FargowiltasSouls.Items.Misc
+namespace MasomodeDLC.Thorium.Items
 {
-    public class BossCountMax : ModItem
+    public class ThoriumBossCountMax : ModItem
     {
+        public override bool Autoload(ref string name)
+        {
+            return ModLoader.GetMod("ThoriumMod") != null;
+        }
+
         public override string Texture => "FargowiltasSouls/Items/Placeholder";
 
         public override void SetStaticDefaults()

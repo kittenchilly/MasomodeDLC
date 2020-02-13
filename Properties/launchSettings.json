@@ -1,7 +1,7 @@
 {
-  "profiles": {
-    "MasomodeDLC": {
-      "commandName": "Project"
+    "profiles": {
+        "MasomodeDLC": {
+            "commandName": "Project"
+        }
     }
-  }
 }

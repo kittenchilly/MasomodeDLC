@@ -38,6 +38,22 @@ namespace MasomodeDLC.Thorium
         public int Counter2 = 0;
         public int CachedDamage;
 
+        public static int boss = -1;
+        public static int birdBoss = -1;
+        public static int jellyfishBoss = -1;
+        public static int viscountBoss = -1;
+        public static int graniteBoss = -1;
+        public static int buriedBoss = -1;
+        public static int scouterBoss = -1;
+        public static int striderBoss = -1;
+        public static int coznixBoss = -1;
+        public static int lichBoss = -1;
+        public static int abyssBoss = -1;
+        public static int aquaBoss = -1;
+        public static int omniBoss = -1;
+        public static int slagBoss = -1;
+        public static int ragBoss = -1;
+
         public override bool Autoload(ref string name)
         {
             return ModLoader.GetMod("ThoriumMod") != null;
@@ -307,6 +323,7 @@ namespace MasomodeDLC.Thorium
                 {
                     if (npc.type == NPCType<TheGrandThunderBirdv2>() && npc.boss == true)
                     {
+                        birdBoss = npc.whoAmI;
                         if (npc.ai[0] < 5f)
                         {
                             if (npc.ai[3] == 0)
@@ -356,26 +373,137 @@ namespace MasomodeDLC.Thorium
                                     NetMessage.SendData(23, -1, -1, null, npcIndex, 0f, 0f, 0f, 0, 0, 0);
                                     Main.npc[npcIndex].boss = false;
                                     Main.npc[npcIndex].scale = 0.5f;
-                                    Main.npc[npcIndex].lifeMax = npc.lifeMax / 25;
-                                    Main.npc[npcIndex].life = npc.lifeMax / 25;
+                                    Main.npc[npcIndex].lifeMax = npc.lifeMax / 20;
+                                    Main.npc[npcIndex].life = npc.lifeMax / 20;
                                     Main.npc[npcIndex].value = 0;
                                 }
-                                Aura(npc, 500, BuffID.Electrified, true, DustID.Electric);
+                                Aura(npc, 750, BuffID.Electrified, true, DustID.Electric);
                             }
                         }
                     }
-                    if (npc.type == NPCType<Hatchling>())
+                    if
+                    (
+                    npc.type == NPCType<QueenJelly>()
+                    )
                     {
-                        Counter++;
-                        if (Counter >= 300)
-                        {
-                            Vector2 vector3 = Main.player[npc.target].Center + new Vector2(npc.Center.X, npc.Center.Y);
-                            Vector2 vector4 = npc.Center + new Vector2(npc.Center.X, npc.Center.Y);
-                            float num = (float)Math.Atan2((double)(vector4.Y - vector3.Y), (double)(vector4.X - vector3.X));
-                            Main.PlaySound(3, (int)npc.position.X, (int)npc.position.Y, 0x1C, 1f, 0f);
-                            Projectile.NewProjectile(npc.Center.X, npc.Center.Y - 30f, (float)(Math.Cos((double)num) * 10.0 * -1.0), (float)(Math.Sin((double)num) * 10.0 * -1.0), ProjectileType<GrandThunderBirdZap>(), 0xF, 0f, 0, 0f, 0f); Counter = 0;
-                        }
+                        jellyfishBoss = npc.whoAmI;
                     }
+                    if
+                    (
+                    npc.type == NPCType<Viscount>()
+                    )
+                    {
+                        viscountBoss = npc.whoAmI;
+                    }
+                    else if
+                    (
+                    npc.type == NPCType<GraniteEnergyStorm>()
+                    )
+                    {
+                        graniteBoss = npc.whoAmI;
+                    }
+                    else if
+                    (
+                    npc.type == NPCType<TheBuriedWarrior>()
+                    )
+                    {
+                        buriedBoss = npc.whoAmI;
+                    }
+                    else if
+                    (
+                    npc.type == NPCType<ThePrimeScouter>()
+                    )
+                    {
+                        scouterBoss = npc.whoAmI;
+                    }
+                    else if
+                    (
+                    npc.type == NPCType<BoreanStrider>() ||
+                    npc.type == NPCType<BoreanStriderPopped>()
+                    )
+                    {
+                        striderBoss = npc.whoAmI;
+                    }
+                    else if
+                    (
+                    npc.type == NPCType<FallenDeathBeholder>() ||
+                    npc.type == NPCType<FallenDeathBeholder2>()
+                    )
+                    {
+                        coznixBoss = npc.whoAmI;
+                    }
+                    else if
+                    (
+                    npc.type == NPCType<Lich>() ||
+                    npc.type == NPCType<LichHeadless>()
+                    )
+                    {
+                        lichBoss = npc.whoAmI;
+                    }
+                    else if
+                    (
+                    npc.type == NPCType<Abyssion>() ||
+                    npc.type == NPCType<AbyssionCracked>() ||
+                    npc.type == NPCType<AbyssionReleased>()
+                    )
+                    {
+                        abyssBoss = npc.whoAmI;
+                    }
+                    else if
+                    (
+                    npc.type == NPCType<Aquaius>() ||
+                    npc.type == NPCType<AquaiusBubblePrime>() ||
+                    npc.type == NPCType<Aquaius2>()
+                    )
+                    {
+                        aquaBoss = npc.whoAmI;
+                    }
+                    else if
+                    (
+                    npc.type == NPCType<Omnicide>()
+                    )
+                    {
+                        omniBoss = npc.whoAmI;
+                    }
+                    else if
+                    (
+                    npc.type == NPCType<SlagFury>()
+                    )
+                    {
+                        slagBoss = npc.whoAmI;
+                    }
+                    else if
+                    (
+                    npc.type == NPCType<RealityBreaker>()
+                    )
+                    {
+                        ragBoss = npc.whoAmI;
+                    }
+                    else if
+                    (
+                    npc.type == NPCType<RealityBreaker>() ||
+                    npc.type == NPCType<Aquaius>() ||
+                    npc.type == NPCType<Aquaius2>() ||
+                    npc.type == NPCType<AquaiusBubble>() ||
+                    npc.type == NPCType<AquaiusBubblePrime>() ||
+                    npc.type == NPCType<AquaTitan>() ||
+                    npc.type == NPCType<BoundlessEntity>() ||
+                    npc.type == NPCType<DeathTitan>() ||
+                    npc.type == NPCType<DespairSpirit>() ||
+                    npc.type == NPCType<DreadSpirit>() ||
+                    npc.type == NPCType<OmegaSigil>() ||
+                    npc.type == NPCType<Omnicide>() ||
+                    npc.type == NPCType<RealityEaterHead>() ||
+                    npc.type == NPCType<RealityEaterBody>() ||
+                    npc.type == NPCType<RealityEaterTail>() ||
+                    npc.type == NPCType<SlagFury>() ||
+                    npc.type == NPCType<SlagTitan>()
+                    )
+                    {
+                        ragBoss = npc.whoAmI;
+                    }
+                    CachedDamage = npc.damage;
+
                     if
                     (
                     npc.type == NPCType<GoblinDrummer>() ||
@@ -874,7 +1002,9 @@ namespace MasomodeDLC.Thorium
         {
             if (Main.npc[npc].type == NPCType<TheGrandThunderBirdv2>() && Main.npc[npc].boss)
             {
+                Main.npc[npc].ai[3] = 2f;
                 Main.npc[npc].ai[2] = 60f;
+                Main.npc[npc].netUpdate = true;
             }
         }
 
@@ -940,6 +1070,26 @@ namespace MasomodeDLC.Thorium
                 if (Main.rand.Next(3) == 0)
                     dust.velocity += Vector2.Normalize(offset) * (reverse ? 5f : -5f);
                 dust.noGravity = true;
+            }
+        }
+
+        public static bool BossIsAlive(ref int bossID, int bossType)
+        {
+            if (bossID != -1)
+            {
+                if (Main.npc[bossID].active && Main.npc[bossID].type == bossType)
+                {
+                    return true;
+                }
+                else
+                {
+                    bossID = -1;
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
             }
         }
 

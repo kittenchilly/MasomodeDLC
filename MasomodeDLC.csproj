@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\..\references\tModLoader.targets" />
   <PropertyGroup>
@@ -17,11 +17,20 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="CalamityMod">
+      <HintPath>..\..\Mod Reader\CalamityMod.XNA.dll</HintPath>
+    </Reference>
+    <Reference Include="FargowiltasSouls">
+      <HintPath>..\..\references\mods\FargowiltasSouls.dll</HintPath>
+    </Reference>
+    <Reference Include="FargowiltasSouls">
+      <HintPath>..\..\references\mods\FargowiltasSouls.dll</HintPath>
+    </Reference>
     <Reference Include="FargowiltasSouls">
       <HintPath>..\..\references\mods\FargowiltasSouls.dll</HintPath>
     </Reference>
     <Reference Include="ThoriumMod">
-      <HintPath>..\..\references\mods\ThoriumMod.dll</HintPath>
+      <HintPath>..\..\Mod Reader\ThoriumMod.XNA.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">

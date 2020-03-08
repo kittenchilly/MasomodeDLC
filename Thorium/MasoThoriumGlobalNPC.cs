@@ -2,6 +2,7 @@ using FargowiltasSouls;
 using FargowiltasSouls.Buffs.Masomode;
 using FargowiltasSouls.NPCs;
 using FargowiltasSouls.Projectiles.Masomode;
+using MasomodeDLC.Thorium.Projectiles;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -28,7 +29,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace MasomodeDLC.Thorium
 {
-	public class ThoriumGlobalNPC : GlobalNPC
+	public class MasoThoriumGlobalNPC : GlobalNPC
 	{
 		public override bool Autoload(ref string name)
 		{
@@ -724,12 +725,12 @@ namespace MasomodeDLC.Thorium
 
 		public override void OnHitByItem(NPC npc, Player player, Item item, int damage, float knockback, bool crit)
 		{
-			npc.GetGlobalNPC<ThoriumGlobalNPC>().lastPlayerAttack = player.whoAmI;
+			npc.GetGlobalNPC<MasoThoriumGlobalNPC>().lastPlayerAttack = player.whoAmI;
 		}
 
 		public override void OnHitByProjectile(NPC npc, Projectile projectile, int damage, float knockback, bool crit)
 		{
-			npc.GetGlobalNPC<ThoriumGlobalNPC>().lastPlayerAttack = projectile.owner;
+			npc.GetGlobalNPC<MasoThoriumGlobalNPC>().lastPlayerAttack = projectile.owner;
 		}
 
 		public override void OnHitPlayer(NPC npc, Player target, int damage, bool crit)
@@ -832,68 +833,78 @@ namespace MasomodeDLC.Thorium
 						if (MasoDLCWorld.ThunderBirdCount < FargoSoulsWorld.MaxCountPreHM)
 							MasoDLCWorld.ThunderBirdCount++;
 					}
-					else if (npc.type == NPCType<QueenJelly>())
+
+					if (npc.type == NPCType<QueenJelly>())
 					{
 						if (MasoDLCWorld.JellyCount < FargoSoulsWorld.MaxCountPreHM)
 							MasoDLCWorld.JellyCount++;
 					}
-					else if (npc.type == NPCType<Viscount>())
+
+					if (npc.type == NPCType<Viscount>())
 					{
 						if (MasoDLCWorld.VisCount < FargoSoulsWorld.MaxCountPreHM)
 							MasoDLCWorld.VisCount++;
 					}
-					else if (npc.type == NPCType<GraniteEnergyStorm>())
+
+					if (npc.type == NPCType<GraniteEnergyStorm>())
 					{
 						if (MasoDLCWorld.GraniteCount < FargoSoulsWorld.MaxCountPreHM)
 							MasoDLCWorld.GraniteCount++;
 					}
-					else if (npc.type == NPCType<TheBuriedWarrior>())
+
+					if (npc.type == NPCType<TheBuriedWarrior>())
 					{
 						if (MasoDLCWorld.ChampionCount < FargoSoulsWorld.MaxCountPreHM)
 							MasoDLCWorld.ChampionCount++;
 					}
-					else if (npc.type == NPCType<ThePrimeScouter>())
+
+					if (npc.type == NPCType<ThePrimeScouter>())
 					{
 						if (MasoDLCWorld.ScouterCount < FargoSoulsWorld.MaxCountPreHM)
 							MasoDLCWorld.ScouterCount++;
 					}
-					else if (npc.type == NPCType<BoreanStriderPopped>())
+
+					if (npc.type == NPCType<BoreanStriderPopped>())
 					{
 						if (MasoDLCWorld.StriderCount < FargoSoulsWorld.MaxCountHM)
 							MasoDLCWorld.StriderCount++;
 					}
-					else if (npc.type == NPCType<FallenDeathBeholder2>())
+
+					if (npc.type == NPCType<FallenDeathBeholder2>())
 					{
 						if (MasoDLCWorld.BeholderCount < FargoSoulsWorld.MaxCountHM)
 							MasoDLCWorld.BeholderCount++;
 					}
-					else if (npc.type == NPCType<LichHeadless>())
+
+					if (npc.type == NPCType<LichHeadless>())
 					{
 						if (MasoDLCWorld.LichCount < FargoSoulsWorld.MaxCountHM)
 							MasoDLCWorld.LichCount++;
 					}
-					else if (npc.type == NPCType<AbyssionReleased>())
+
+					if (npc.type == NPCType<AbyssionReleased>())
 					{
 						if (MasoDLCWorld.AbyssionCount < FargoSoulsWorld.MaxCountHM)
 							MasoDLCWorld.AbyssionCount++;
 					}
-					else if (npc.type == NPCType<RealityBreaker>())
+
+					if (npc.type == NPCType<RealityBreaker>())
 					{
 						if (MasoDLCWorld.RagnarokCount < FargoSoulsWorld.MaxCountHM)
 							MasoDLCWorld.RagnarokCount++;
 					}
+
 					if (npc.type == NPCType<GoblinDrummer>()
 					 || npc.type == NPCType<GoblinSpiritGuide>()
-					 || npc.type == NPCType<GoblinTrapper>()
-					)
+					 || npc.type == NPCType<GoblinTrapper>())
 					{
 						if (Main.netMode != 1)
 							Projectile.NewProjectile(npc.Center, new Vector2(Main.rand.NextFloat(-2f, 2f), -5), ProjectileType<GoblinSpikyBall>(), 15, 0, Main.myPlayer);
 					}
+
 					if (npc.type == NPCType<HellBringerMimic>()
 					 || npc.type == NPCType<MyceliumMimic>()
-					 || npc.type == NPCType<DepthMimic>()
-					)
+					 || npc.type == NPCType<DepthMimic>())
 					{
 						if (Main.netMode != 1)
 						{
@@ -902,6 +913,12 @@ namespace MasomodeDLC.Thorium
 								Projectile.NewProjectile(npc.position.X + Main.rand.Next(npc.width), npc.position.Y + Main.rand.Next(npc.height),
 									Main.rand.Next(-30, 31) * .1f, Main.rand.Next(-40, -15) * .1f, ProjectileType<FakeHeart>(), 20, 0f, Main.myPlayer);
 						}
+					}
+
+					if (npc.type == NPCType<FrostBurntFlayer>())
+					{
+						if (Main.netMode != 1)
+							Projectile.NewProjectile(npc.Center, new Vector2(0, -5), ProjectileType<FrostBurntFlayerBeam>(), 35, 0, Main.myPlayer);
 					}
 				}
 			}
@@ -1003,7 +1020,7 @@ namespace MasomodeDLC.Thorium
 
 		public override bool PreNPCLoot(NPC npc)
 		{
-			Player player = Main.player[npc.GetGlobalNPC<ThoriumGlobalNPC>().lastPlayerAttack];
+			Player player = Main.player[npc.GetGlobalNPC<MasoThoriumGlobalNPC>().lastPlayerAttack];
 			if (npc.type == NPCType<FrostBurnt>()
 			 || npc.type == NPCType<FrostBurntFlayer>())
 			{

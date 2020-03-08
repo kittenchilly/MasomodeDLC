@@ -23,8 +23,13 @@ using static Terraria.ModLoader.ModContent;
 
 namespace MasomodeDLC.Thorium
 {
-    public class ThoriumGlobalProj : GlobalProjectile
+    public class MasoThoriumGlobalProj : GlobalProjectile
     {
+        public override bool Autoload(ref string name)
+        {
+            return ModLoader.GetMod("ThoriumMod") != null;
+        }
+
         private readonly Mod Thorium = ModLoader.GetMod("ThoriumMod");
         private readonly Mod FargoSouls = ModLoader.GetMod("FargowiltasSouls");
         public int CachedDamage;
@@ -36,11 +41,6 @@ namespace MasomodeDLC.Thorium
             {
                 return true;
             }
-        }
-
-        public override bool Autoload(ref string name)
-        {
-            return ModLoader.GetMod("ThoriumMod") != null;
         }
 
         public override bool PreAI(Projectile proj)
@@ -79,7 +79,7 @@ namespace MasomodeDLC.Thorium
                         proj.type == ProjectileType<ThunderGust>()
                         )
                         {
-                            if (FargoSoulsGlobalNPC.BossIsAlive(ref ThoriumGlobalNPC.birdBoss, NPCType<TheGrandThunderBirdv2>()))
+                            if (FargoSoulsGlobalNPC.BossIsAlive(ref MasoThoriumGlobalNPC.birdBoss, NPCType<TheGrandThunderBirdv2>()))
                                 proj.damage = (int)(proj.damage * (1 + MasoDLCWorld.ThunderBirdCount * .0125));
                         }
                         else if
@@ -89,7 +89,7 @@ namespace MasomodeDLC.Thorium
                         proj.type == ProjectileType<QueenTorrent>()
                         )
                         {
-                            if (FargoSoulsGlobalNPC.BossIsAlive(ref ThoriumGlobalNPC.jellyfishBoss, NPCType<QueenJelly>()))
+                            if (FargoSoulsGlobalNPC.BossIsAlive(ref MasoThoriumGlobalNPC.jellyfishBoss, NPCType<QueenJelly>()))
                                 proj.damage = (int)(proj.damage * (1 + MasoDLCWorld.JellyCount * .0125));
                         }
                         else if
@@ -104,7 +104,7 @@ namespace MasomodeDLC.Thorium
                         proj.type == ProjectileType<ViscountRockSummon2>()
                         )
                         {
-                            if (FargoSoulsGlobalNPC.BossIsAlive(ref ThoriumGlobalNPC.viscountBoss, NPCType<Viscount>()))
+                            if (FargoSoulsGlobalNPC.BossIsAlive(ref MasoThoriumGlobalNPC.viscountBoss, NPCType<Viscount>()))
                                 proj.damage = (int)(proj.damage * (1 + MasoDLCWorld.VisCount * .0125));
                         }
                         else if
@@ -112,7 +112,7 @@ namespace MasomodeDLC.Thorium
                         proj.type == ProjectileType<GraniteCharge>()
                         )
                         {
-                            if (FargoSoulsGlobalNPC.BossIsAlive(ref ThoriumGlobalNPC.graniteBoss, NPCType<GraniteEnergyStorm>()))
+                            if (FargoSoulsGlobalNPC.BossIsAlive(ref MasoThoriumGlobalNPC.graniteBoss, NPCType<GraniteEnergyStorm>()))
                                 proj.damage = (int)(proj.damage * (1 + MasoDLCWorld.GraniteCount * .0125));
                         }
                         else if
@@ -130,7 +130,7 @@ namespace MasomodeDLC.Thorium
                         proj.type == ProjectileType<BuriedMagicPop>()
                         )
                         {
-                            if (FargoSoulsGlobalNPC.BossIsAlive(ref ThoriumGlobalNPC.buriedBoss, NPCType<TheBuriedWarrior>()))
+                            if (FargoSoulsGlobalNPC.BossIsAlive(ref MasoThoriumGlobalNPC.buriedBoss, NPCType<TheBuriedWarrior>()))
                                 proj.damage = (int)(proj.damage * (1 + MasoDLCWorld.ChampionCount * .0125));
                         }
                         else if
@@ -155,7 +155,7 @@ namespace MasomodeDLC.Thorium
                         proj.type == ProjectileType<GravitySpark>()
                         )
                         {
-                            if (FargoSoulsGlobalNPC.BossIsAlive(ref ThoriumGlobalNPC.scouterBoss, NPCType<ThePrimeScouter>()))
+                            if (FargoSoulsGlobalNPC.BossIsAlive(ref MasoThoriumGlobalNPC.scouterBoss, NPCType<ThePrimeScouter>()))
                                 proj.damage = (int)(proj.damage * (1 + MasoDLCWorld.ScouterCount * .0125));
                         }
                         else if
@@ -170,7 +170,7 @@ namespace MasomodeDLC.Thorium
                         proj.type == ProjectileType<BlizzardBoom>()
                         )
                         {
-                            if (FargoSoulsGlobalNPC.BossIsAlive(ref ThoriumGlobalNPC.striderBoss, NPCType<BoreanStrider>()) || FargoSoulsGlobalNPC.BossIsAlive(ref ThoriumGlobalNPC.striderBoss, NPCType<BoreanStriderPopped>()))
+                            if (FargoSoulsGlobalNPC.BossIsAlive(ref MasoThoriumGlobalNPC.striderBoss, NPCType<BoreanStrider>()) || FargoSoulsGlobalNPC.BossIsAlive(ref MasoThoriumGlobalNPC.striderBoss, NPCType<BoreanStriderPopped>()))
                                 proj.damage = (int)(proj.damage * (1 + MasoDLCWorld.StriderCount * .0125));
                         }
                         else if
@@ -181,7 +181,7 @@ namespace MasomodeDLC.Thorium
                         proj.type == ProjectileType<BeholderLavaCascade>()
                         )
                         {
-                            if (FargoSoulsGlobalNPC.BossIsAlive(ref ThoriumGlobalNPC.coznixBoss, NPCType<FallenDeathBeholder>()) || FargoSoulsGlobalNPC.BossIsAlive(ref ThoriumGlobalNPC.coznixBoss, NPCType<FallenDeathBeholder2>()))
+                            if (FargoSoulsGlobalNPC.BossIsAlive(ref MasoThoriumGlobalNPC.coznixBoss, NPCType<FallenDeathBeholder>()) || FargoSoulsGlobalNPC.BossIsAlive(ref MasoThoriumGlobalNPC.coznixBoss, NPCType<FallenDeathBeholder2>()))
                                 proj.damage = (int)(proj.damage * (1 + MasoDLCWorld.BeholderCount * .0125));
                         }
                         else if
@@ -199,7 +199,7 @@ namespace MasomodeDLC.Thorium
                         proj.type == ProjectileType<LichMatter>()
                         )
                         {
-                            if (FargoSoulsGlobalNPC.BossIsAlive(ref ThoriumGlobalNPC.lichBoss, NPCType<Lich>()) || FargoSoulsGlobalNPC.BossIsAlive(ref ThoriumGlobalNPC.lichBoss, NPCType<LichHeadless>()))
+                            if (FargoSoulsGlobalNPC.BossIsAlive(ref MasoThoriumGlobalNPC.lichBoss, NPCType<Lich>()) || FargoSoulsGlobalNPC.BossIsAlive(ref MasoThoriumGlobalNPC.lichBoss, NPCType<LichHeadless>()))
                                 proj.damage = (int)(proj.damage * (1 + MasoDLCWorld.LichCount * .0125));
                         }
                         else if
@@ -214,7 +214,7 @@ namespace MasomodeDLC.Thorium
                         proj.type == ProjectileType<OldGodSpit2>()
                         )
                         {
-                            if (FargoSoulsGlobalNPC.BossIsAlive(ref ThoriumGlobalNPC.abyssBoss, NPCType<Abyssion>()) || FargoSoulsGlobalNPC.BossIsAlive(ref ThoriumGlobalNPC.abyssBoss, NPCType<AbyssionCracked>()) || FargoSoulsGlobalNPC.BossIsAlive(ref ThoriumGlobalNPC.abyssBoss, NPCType<AbyssionReleased>()))
+                            if (FargoSoulsGlobalNPC.BossIsAlive(ref MasoThoriumGlobalNPC.abyssBoss, NPCType<Abyssion>()) || FargoSoulsGlobalNPC.BossIsAlive(ref MasoThoriumGlobalNPC.abyssBoss, NPCType<AbyssionCracked>()) || FargoSoulsGlobalNPC.BossIsAlive(ref MasoThoriumGlobalNPC.abyssBoss, NPCType<AbyssionReleased>()))
                                 proj.damage = (int)(proj.damage * (1 + MasoDLCWorld.AbyssionCount * .0125));
                         }
                         else if
@@ -247,12 +247,12 @@ namespace MasomodeDLC.Thorium
                         {
                             if
                             (
-                            FargoSoulsGlobalNPC.BossIsAlive(ref ThoriumGlobalNPC.aquaBoss, NPCType<Aquaius>()) ||
-                            FargoSoulsGlobalNPC.BossIsAlive(ref ThoriumGlobalNPC.aquaBoss, NPCType<AquaiusBubblePrime>()) ||
-                            FargoSoulsGlobalNPC.BossIsAlive(ref ThoriumGlobalNPC.aquaBoss, NPCType<Aquaius2>()) ||
-                            FargoSoulsGlobalNPC.BossIsAlive(ref ThoriumGlobalNPC.omniBoss, NPCType<Omnicide>()) ||
-                            FargoSoulsGlobalNPC.BossIsAlive(ref ThoriumGlobalNPC.slagBoss, NPCType<SlagFury>()) ||
-                            FargoSoulsGlobalNPC.BossIsAlive(ref ThoriumGlobalNPC.ragBoss, NPCType<RealityBreaker>())
+                            FargoSoulsGlobalNPC.BossIsAlive(ref MasoThoriumGlobalNPC.aquaBoss, NPCType<Aquaius>()) ||
+                            FargoSoulsGlobalNPC.BossIsAlive(ref MasoThoriumGlobalNPC.aquaBoss, NPCType<AquaiusBubblePrime>()) ||
+                            FargoSoulsGlobalNPC.BossIsAlive(ref MasoThoriumGlobalNPC.aquaBoss, NPCType<Aquaius2>()) ||
+                            FargoSoulsGlobalNPC.BossIsAlive(ref MasoThoriumGlobalNPC.omniBoss, NPCType<Omnicide>()) ||
+                            FargoSoulsGlobalNPC.BossIsAlive(ref MasoThoriumGlobalNPC.slagBoss, NPCType<SlagFury>()) ||
+                            FargoSoulsGlobalNPC.BossIsAlive(ref MasoThoriumGlobalNPC.ragBoss, NPCType<RealityBreaker>())
                             )
                             {
                                 proj.damage = (int)(proj.damage * (1 + MasoDLCWorld.RagnarokCount * .0125));

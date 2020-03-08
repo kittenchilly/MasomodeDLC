@@ -1,6 +1,4 @@
 ﻿using System;
-using EntropysEdge.Buffs;
-using EntropysEdge.NPCs.Titania;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -32,10 +30,16 @@ namespace MasomodeDLC.Thorium.Projectiles
 		public override void AI()
 		{
 			projectile.ai[0] += 1;
-			projectile.rotation += MathHelper.ToRadians(100 * (projectile.ai[0] * projectile.ai[0]));
-			if (projectile.ai[0] == 70)
+			if (projectile.ai[0] >= 90)
 			{
-				float dist = 400;
+				projectile.velocity = new Vector2(14.5f, 0).RotatedBy(projectile.rotation - MathHelper.ToRadians(45f));
+				if (projectile.ai[0] == 90)
+					Main.PlaySound(SoundID.NPCHit5, projectile.Center).Pitch += 0.15f;
+			}
+			else if (projectile.ai[0] >= 70)
+			{
+				projectile.velocity = Vector2.Zero;
+				float dist = 800f;
 				for (int i = 0; i < Main.maxPlayers; i++)
 				{
 					Player player = Main.player[i];
@@ -46,20 +50,24 @@ namespace MasomodeDLC.Thorium.Projectiles
 						dist = distanceTo.Length();
 					}
 				}
-				for (int i = 0; i < 10; i++)
+				if (projectile.ai[0] == 70)
 				{
-					Vector2 offset = new Vector2(8, 0).RotatedByRandom(MathHelper.ToRadians(36f * i));
-					Vector2 velOffset = new Vector2(3, 0).RotatedBy(offset.ToRotation());
-					Dust dust = Dust.NewDustPerfect(projectile.Center + offset, DustID.Ice, velOffset, 100, default, 1f);
-					dust.noGravity = true;
+					for (int i = 0; i < 10; i++)
+					{
+						Vector2 offset = new Vector2(8, 0).RotatedByRandom(MathHelper.ToRadians(36f * i));
+						Vector2 velOffset = new Vector2(3, 0).RotatedBy(offset.ToRotation());
+						Dust dust = Dust.NewDustPerfect(projectile.Center + offset, DustID.Ice, velOffset, 100, default, 1f);
+						dust.noGravity = true;
+					}
+					Main.PlaySound(SoundID.NPCHit5, projectile.Center).Pitch -= 0.10f;
 				}
-				Main.PlaySound(SoundID.NPCHit5, projectile.Center).Pitch -= 0.10f;
 			}
-
-			if (projectile.ai[0] < 100)
+			else
 			{
-				Main.PlaySound(SoundID.NPCHit5, projectile.Center).Pitch += 0.15f;
+				projectile.rotation += MathHelper.ToRadians((projectile.ai[0] * projectile.ai[0]) / 50);
+				projectile.velocity *= 0.975f;
 			}
+			
 
 			if (!Main.rand.NextBool(5))
 			{

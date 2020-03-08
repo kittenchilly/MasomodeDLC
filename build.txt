@@ -1,6 +1,6 @@
 displayName = Masomode DLC
 author = kittenchilly
-version = 0.1
-modReferences = FargowiltasSouls
-weakReferences = ThoriumMod@1.6.1.0, Fargowiltas@1.7.0
-sortAfter = ThoriumMod, Fargowiltas
+version = 0.125
+modReferences = Fargowiltas, FargowiltasSouls
+weakReferences = ThoriumMod@1.6.1.4, CalamityMod@1.4.3.1
+sortAfter = ThoriumMod, CalamityMod, Fargowiltas

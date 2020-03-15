@@ -1,5 +1,5 @@
 displayName = Masomode DLC
-author = kittenchilly
+author = kittenchilly, Planterror, ThomasthePencil
 version = 0.125
 modReferences = Fargowiltas, FargowiltasSouls
 weakReferences = ThoriumMod@1.6.1.4, CalamityMod@1.4.3.1

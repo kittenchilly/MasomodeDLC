@@ -23,6 +23,7 @@ namespace MasomodeDLC.Thorium.Buffs
 		{
 			DisplayName.SetDefault("Rubber Weapon");
 			Description.SetDefault("Your attacks are friendly and squeaky");
+			Main.debuff[Type] = true;
 		}
 
 		public override void Update(Player player, ref int buffIndex)

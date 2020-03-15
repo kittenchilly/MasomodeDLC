@@ -23,6 +23,7 @@ namespace MasomodeDLC.Thorium.Buffs
 		{
 			DisplayName.SetDefault("Tesla Surge");
 			Description.SetDefault("You're shocked and cannot control your speed");
+			Main.debuff[Type] = true;
 		}
 
 		public override void Update(Player player, ref int buffIndex)

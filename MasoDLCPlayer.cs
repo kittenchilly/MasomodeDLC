@@ -21,37 +21,39 @@ namespace MasomodeDLC
 
 		public override void ModifyHitNPC(Item item, NPC target, ref int damage, ref float knockback, ref bool crit)
 		{
-			RubberWeaponEffect(null, target, ref damage);
+			damage = 0;
+			RubberWeaponEffect(null, target);
 		}
 
 		public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
 		{
-			RubberWeaponEffect(null, target, ref damage);
+			damage = 0;
+			RubberWeaponEffect(null, target);
 		}
 
 		public override void ModifyHitPvp(Item item, Player target, ref int damage, ref bool crit)
 		{
-			RubberWeaponEffect(target, null, ref damage);
+			damage = 0;
+			RubberWeaponEffect(target, null);
 		}
 
 		public override void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit)
 		{
-			RubberWeaponEffect(target, null, ref damage);
+			damage = 0;
+			RubberWeaponEffect(target, null);
 		}
-		public void RubberWeaponEffect(Player player, NPC npc, ref int damage)
+		public void RubberWeaponEffect(Player player, NPC npc)
 		{
 			int rand = Main.rand.Next(7);
 			string squeak = "/squeak" + rand;
 			if (rubberWeapon && npc == null)
 			{
-				damage = 0;
 				player.statLife += 1;
 				player.HealEffect(1, true);
 				Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "FargowiltasSouls/Sounds/SqueakyToy" + squeak), player.Center);
 			}
 			else if (rubberWeapon && player == null)
 			{
-				damage = 0;
 				npc.life += 1;
 				npc.HealEffect(1, true);
 				Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "FargowiltasSouls/Sounds/SqueakyToy" + squeak), npc.Center);

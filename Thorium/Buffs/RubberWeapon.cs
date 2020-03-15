@@ -12,7 +12,7 @@ using MasomodeDLC.Thorium;
 
 namespace MasomodeDLC.Thorium.Buffs
 {
-	public class Teslasurge : ModBuff
+	public class RubberWeapon : ModBuff
 	{
 		public override bool Autoload(ref string name, ref string texture)
 		{
@@ -21,14 +21,14 @@ namespace MasomodeDLC.Thorium.Buffs
 		}
 		public override void SetDefaults()
 		{
-			DisplayName.SetDefault("Tesla Surge");
-			Description.SetDefault("You're shocked and cannot control your speed");
+			DisplayName.SetDefault("Rubber Weapon");
+			Description.SetDefault("Your attacks are friendly and squeaky");
 			Main.debuff[Type] = true;
 		}
 
 		public override void Update(Player player, ref int buffIndex)
 		{
-			player.GetModPlayer<MasoDLCPlayer>().teslasurgeplayer = true;
+			player.GetModPlayer<MasoDLCPlayer>().rubberWeapon = true;
 		}
 
 		public override void Update(NPC npc, ref int buffIndex)

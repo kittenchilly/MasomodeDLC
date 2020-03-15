@@ -9,7 +9,7 @@ namespace MasomodeDLC
 	{
 		public static int ThunderBirdCount;
 		public static int JellyCount;
-		public static int VisCount; //heh
+		public static int VisCount; //heh | plant note: nice meme
 		public static int GraniteCount;
 		public static int ChampionCount;
 		public static int ScouterCount;

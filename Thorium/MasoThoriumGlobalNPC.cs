@@ -25,7 +25,10 @@ using ThoriumMod.NPCs.QueenJelly;
 using ThoriumMod.NPCs.Scouter;
 using ThoriumMod.NPCs.Thunder;
 using ThoriumMod.Projectiles.Boss;
+using CalamityMod;
+using CalamityMod.World;
 using static Terraria.ModLoader.ModContent;
+
 
 namespace MasomodeDLC.Thorium
 {
@@ -164,8 +167,26 @@ namespace MasomodeDLC.Thorium
 						}
 					}
 					#endregion
+
+					if (ModLoader.GetMod("CalamityMod") != null)
+					{
+						if (CalamityWorld.downedSCal)
+						{
+							//todo: beat myself up over converting a fucking float to a fucking int without fucking up the numbers
+							//npc.damage *= 1.5f;
+							//npc.defense *= 1.7f;
+							npc.lifeMax *= 2;
+						}
+						else
+						{
+							//npc.damage *= 1.2;
+							//npc.defense *= 1.2;
+							//npc.lifeMax *= 1.2;
+						}
+					}
 				}
 			}
+			
 		}
 
 		public override void ScaleExpertStats(NPC npc, int numPlayers, float bossLifeScale)

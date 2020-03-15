@@ -18,19 +18,16 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="CalamityMod">
-      <HintPath>..\..\Mod Reader\CalamityMod.XNA.dll</HintPath>
+      <HintPath>..\..\references\mods\CalamityMod.dll</HintPath>
     </Reference>
     <Reference Include="FargowiltasSouls">
-      <HintPath>..\..\references\mods\FargowiltasSouls.dll</HintPath>
-    </Reference>
-    <Reference Include="FargowiltasSouls">
-      <HintPath>..\..\references\mods\FargowiltasSouls.dll</HintPath>
+      <HintPath>..\..\references\mods\Fargowiltas.dll</HintPath>
     </Reference>
     <Reference Include="FargowiltasSouls">
       <HintPath>..\..\references\mods\FargowiltasSouls.dll</HintPath>
     </Reference>
     <Reference Include="ThoriumMod">
-      <HintPath>..\..\Mod Reader\ThoriumMod.XNA.dll</HintPath>
+      <HintPath>..\..\references\mods\ThoriumMod.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">

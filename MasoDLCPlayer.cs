@@ -17,6 +17,46 @@ namespace MasomodeDLC
 		private readonly Mod Calamity = ModLoader.GetMod("CalamityMod");
 
 		public bool teslasurgeplayer;
+		public bool rubberWeapon;
+
+		public override void ModifyHitNPC(Item item, NPC target, ref int damage, ref float knockback, ref bool crit)
+		{
+			RubberWeaponEffect(null, target, ref damage);
+		}
+
+		public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+		{
+			RubberWeaponEffect(null, target, ref damage);
+		}
+
+		public override void ModifyHitPvp(Item item, Player target, ref int damage, ref bool crit)
+		{
+			RubberWeaponEffect(target, null, ref damage);
+		}
+
+		public override void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit)
+		{
+			RubberWeaponEffect(target, null, ref damage);
+		}
+		public void RubberWeaponEffect(Player player, NPC npc, ref int damage)
+		{
+			int rand = Main.rand.Next(7);
+			string squeak = "/squeak" + rand;
+			if (rubberWeapon && npc == null)
+			{
+				damage = 0;
+				player.statLife += 1;
+				player.HealEffect(1, true);
+				Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "FargowiltasSouls/Sounds/SqueakyToy" + squeak), player.Center);
+			}
+			else if (rubberWeapon && player == null)
+			{
+				damage = 0;
+				npc.life += 1;
+				npc.HealEffect(1, true);
+				Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "FargowiltasSouls/Sounds/SqueakyToy" + squeak), npc.Center);
+			}
+		}
 
 		public override void PostUpdateBuffs()
 		{
@@ -67,10 +107,12 @@ namespace MasomodeDLC
 		public override void ResetEffects()
 		{
 			teslasurgeplayer = false;
+			rubberWeapon = false;
 		}
 		public override void UpdateDead()
 		{
 			teslasurgeplayer = false;
+			rubberWeapon = false;
 		}
 		public override void UpdateBadLifeRegen()
 		{

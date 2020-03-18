@@ -408,12 +408,12 @@ namespace MasomodeDLC.Calamity
                     MasoDLCWorld.BloodyWormBossesCount++;
                 }
 
-                if (npc.type == NPCType<SlimeGodCore>() && npc.boss && (!NPC.AnyNPCs(NPCType < SlimeGodSplit) || !NPC.AnyNPCs(NPCType < SlimeGodRunSplit)) && MasoDLCWorld.TwoBiomeMimicsAndAFlockoCount < MasoDLCWorld.clamMaxCountPreHM)
+                if (npc.type == NPCType<SlimeGodCore>() && npc.boss && (!NPC.AnyNPCs(NPCType<SlimeGodSplit>()) || !NPC.AnyNPCs(NPCType<SlimeGodRunSplit>())) && MasoDLCWorld.TwoBiomeMimicsAndAFlockoCount < MasoDLCWorld.clamMaxCountPreHM)
                 {
                     MasoDLCWorld.TwoBiomeMimicsAndAFlockoCount++;
                 }
 
-                if (npc.type == NPCType<SlimeGodSplit>() && npc.boss && (!NPC.AnyNPCs(NPCTypeSlimeGodCore > ()) || NPC.CountNPCS(NPCType<SlimeGodSplit>()) < 2 || NPC.AnyNPCs(NPCType<SlimeGodRunSplit>())) && MasoDLCWorld.TwoBiomeMimicsAndAFlockoCount < MasoDLCWorld.clamMaxCountPreHM)
+                if (npc.type == NPCType<SlimeGodSplit>() && npc.boss && (!NPC.AnyNPCs(NPCType<SlimeGodCore>()) || NPC.CountNPCS(NPCType<SlimeGodSplit>()) < 2 || NPC.AnyNPCs(NPCType<SlimeGodRunSplit>())) && MasoDLCWorld.TwoBiomeMimicsAndAFlockoCount < MasoDLCWorld.clamMaxCountPreHM)
                 {
                     MasoDLCWorld.TwoBiomeMimicsAndAFlockoCount++;
                 }

@@ -1,23 +1,25 @@
 using CalamityMod.CalPlayer;
 using MasomodeDLC.Calamity.Buffs;
-using MasomodeDLC.Thorium.Buffs;
-using ThoriumMod.Buffs;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
-using Terraria.ID;
+using ThoriumMod.Buffs;
 
 namespace MasomodeDLC
 {
-    public class MasoDLCPlayer : ModPlayer
-    {
+	public class MasoDLCPlayer : ModPlayer
+	{
 		public int MinuteTimer = 60;
 
 		private readonly Mod Thorium = ModLoader.GetMod("ThoriumMod");
 		private readonly Mod Calamity = ModLoader.GetMod("CalamityMod");
-
-		public bool teslasurgeplayer;
+		#region Buff Bools
+		public bool teslasurge;
 		public bool rubberWeapon;
+		public bool wristpain;
+		public bool creativeblank;
+		#endregion
 
 		public override void ModifyHitNPC(Item item, NPC target, ref int damage, ref float knockback, ref bool crit)
 		{
@@ -106,9 +108,9 @@ namespace MasomodeDLC
 				}
 				if (player.HasBuff(mod.BuffType("Teslasurge")))
 				{
-					if (MinuteTimer == 60)
+					for (int i = 60; i == 0; i--)
 					{
-						player.maxRunSpeed -= Main.rand.NextFloat(0.01f, 0.2f);
+						player.maxRunSpeed += Main.rand.NextFloat(-0.25f, 0.25f);
 					}
 				}
 			}
@@ -120,17 +122,22 @@ namespace MasomodeDLC
 		}
 		public override void ResetEffects()
 		{
-			teslasurgeplayer = false;
+			teslasurge = false;
 			rubberWeapon = false;
+			wristpain = false;
+			creativeblank = false;
+			
 		}
 		public override void UpdateDead()
 		{
-			teslasurgeplayer = false;
+			teslasurge = false;
 			rubberWeapon = false;
+			wristpain = false;
+			creativeblank = false;
 		}
 		public override void UpdateBadLifeRegen()
 		{
-			if (teslasurgeplayer)
+			if (teslasurge)
 			{
 				if (player.lifeRegen > 0)
 				{
@@ -142,7 +149,7 @@ namespace MasomodeDLC
 		}
 		public override void DrawEffects(PlayerDrawInfo drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
 		{
-			if (teslasurgeplayer)
+			if (teslasurge)
 			{
 				//todo: tesla effects
 			}

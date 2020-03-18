@@ -25,8 +25,6 @@ using ThoriumMod.NPCs.QueenJelly;
 using ThoriumMod.NPCs.Scouter;
 using ThoriumMod.NPCs.Thunder;
 using ThoriumMod.Projectiles.Boss;
-using CalamityMod;
-using CalamityMod.World;
 using static Terraria.ModLoader.ModContent;
 
 
@@ -66,6 +64,7 @@ namespace MasomodeDLC.Thorium
 		public static int slagBoss = -1;
 		public static int ragBoss = -1;
 
+		public bool teslasurge;
 		public override void SetDefaults(NPC npc)
 		{
 			FargoSoulsGlobalNPC fargoSoulsGlobalNPC = npc.GetGlobalNPC<FargoSoulsGlobalNPC>();
@@ -136,12 +135,12 @@ namespace MasomodeDLC.Thorium
 					 || npc.type == NPCType<FrozenGross>()
 					 || npc.type == NPCType<Coldling>())
 
-					if (npc.type == NPCType<Nestling>()
-					 || npc.type == NPCType<WindElemental>()
-					 || npc.type == NPCType<CyanHag>())
-					{
-						npc.buffImmune[BuffID.Suffocation] = true;
-					}
+						if (npc.type == NPCType<Nestling>()
+						 || npc.type == NPCType<WindElemental>()
+						 || npc.type == NPCType<CyanHag>())
+						{
+							npc.buffImmune[BuffID.Suffocation] = true;
+						}
 
 					if (npc.type == NPCType<RedHag>()
 					 || npc.type == NPCType<BoneFlayer>()
@@ -168,8 +167,12 @@ namespace MasomodeDLC.Thorium
 					}
 					#endregion
 				}
+				if (teslasurge)
+				{
+					//speed code here?
+				}
 			}
-			
+
 		}
 
 		public override void ScaleExpertStats(NPC npc, int numPlayers, float bossLifeScale)
@@ -649,7 +652,7 @@ namespace MasomodeDLC.Thorium
 						}
 
 						if (npc.type == NPCType<BoreanStrider>()
-						 || npc.type == NPCType<BoreanStriderPopped>() 
+						 || npc.type == NPCType<BoreanStriderPopped>()
 						 || npc.type == NPCType<BoreanMyte1>()
 						 || npc.type == NPCType<BoreanHopper>())
 						{
@@ -1018,6 +1021,21 @@ namespace MasomodeDLC.Thorium
 							}
 						}
 					}
+				}
+			}
+		}
+		public override void UpdateLifeRegen(NPC npc, ref int damage)
+		{
+			if (teslasurge)
+			{
+				if (npc.lifeRegen > 0)
+				{
+					npc.lifeRegen = 0;
+				}
+				npc.lifeRegen -= 8;
+				if (damage < 2)
+				{
+					damage = 2;
 				}
 			}
 		}

@@ -14,6 +14,16 @@ namespace MasomodeDLC
 
         }
 
+        public override void Load()
+        {
+            if (Main.netMode != NetmodeID.Server)
+            {
+                Ref<Effect> clouds = new Ref<Effect>(GetEffect("Effects/Clouds"));
+                Filters.Scene["CloudFilter"] = new Filter(new ScreenShaderData(clouds, "CreateClouds"), EffectPriority.VeryHigh);
+                Filters.Scene["CloudFilter"].Load();
+            }
+        }
+
         public static bool NoInvasion(NPCSpawnInfo spawnInfo) => !spawnInfo.invasion && (!Main.pumpkinMoon && !Main.snowMoon || spawnInfo.spawnTileY > Main.worldSurface || Main.dayTime) &&
                    (!Main.eclipse || spawnInfo.spawnTileY > Main.worldSurface || !Main.dayTime);
 

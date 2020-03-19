@@ -1,5 +1,14 @@
-﻿using Terraria;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Terraria;
 using Terraria.ModLoader;
+using Terraria.ID;
+using Microsoft.Xna.Framework.Graphics;
+using MasomodeDLC;
+using MasomodeDLC.Thorium;
 
 namespace MasomodeDLC.Thorium.Buffs
 {
@@ -10,15 +19,21 @@ namespace MasomodeDLC.Thorium.Buffs
 			texture = "FargowiltasSouls/Buffs/PlaceholderDebuff";
 			return true;
 		}
-
 		public override void SetDefaults()
 		{
-			Description.SetDefault("Your vision is blinded");
+			DisplayName.SetDefault("Clouded");
+			Description.SetDefault("You can’t see a thing");
+			Main.debuff[Type] = true;
 		}
 
 		public override void Update(Player player, ref int buffIndex)
 		{
-			base.Update(player, ref buffIndex);
+			player.GetModPlayer<MasoDLCPlayer>().displayClouds = true;
+		}
+
+		public override void Update(NPC npc, ref int buffIndex)
+		{
+			base.Update(npc, ref buffIndex);
 		}
 	}
 }

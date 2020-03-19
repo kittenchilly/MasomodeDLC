@@ -20,7 +20,10 @@ namespace MasomodeDLC
 		public bool rubberWeapon;
 		public bool wristpain;
 		public bool creativeblank;
+		public bool displayClouds;
 		#endregion
+
+
 
 		public override void ModifyHitNPC(Item item, NPC target, ref int damage, ref float knockback, ref bool crit)
 		{
@@ -127,7 +130,7 @@ namespace MasomodeDLC
 			rubberWeapon = false;
 			wristpain = false;
 			creativeblank = false;
-			
+			displayClouds = false;
 		}
 		public override void UpdateDead()
 		{
@@ -135,6 +138,7 @@ namespace MasomodeDLC
 			rubberWeapon = false;
 			wristpain = false;
 			creativeblank = false;
+			displayClouds = false;
 		}
 		public override void UpdateBadLifeRegen()
 		{
@@ -153,6 +157,37 @@ namespace MasomodeDLC
 			if (teslasurge)
 			{
 				//todo: tesla effects
+			}
+		}
+
+		bool doCooldown = true;
+		int cloudTime = 0;
+		int coolDown = 0;
+
+		public override void PostUpdate()
+		{
+			if (displayClouds && Main.netMode != NetmodeID.Server && !Filters.Scene["CloudFilter"].IsActive())
+			{
+				Filters.Scene.Activate("CloudFilter", player.Center).GetShader().UseColor(1f, 1f, 1f).UseIntensity(80f).UseOpacity(0.95f);
+			}
+			else if (displayClouds && Main.netMode != NetmodeID.Server && Filters.Scene["CloudFilter"].IsActive())
+			{
+				doCooldown = true;
+				cloudTime++;
+				Filters.Scene["CloudFilter"].GetShader().UseProgress(cloudTime).UseTargetPosition(player.Center).UseOpacity(0.95f);
+			}
+			if (doCooldown && !displayClouds && Main.netMode != NetmodeID.Server)
+			{
+				coolDown++;
+				float progress = coolDown / 60f;
+				Filters.Scene["CloudFilter"].GetShader().UseProgress(progress).UseTargetPosition(player.Center).UseIntensity(80f - (progress * 80f)).UseOpacity(0.95f);
+				if (coolDown >= 60)
+				{
+					Filters.Scene["CloudFilter"].Deactivate();
+					cloudTime = 0;
+					coolDown = 0;
+					doCooldown = false;
+				}
 			}
 		}
 	}

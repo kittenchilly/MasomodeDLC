@@ -1,6 +1,9 @@
 using Terraria;
 using Terraria.ModLoader;
 using ThoriumMod;
+using Microsoft.Xna.Framework.Graphics;
+using Terraria.Graphics.Effects;
+using Terraria.Graphics.Shaders;
 
 namespace MasomodeDLC
 {

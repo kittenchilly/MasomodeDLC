@@ -25,30 +25,37 @@ You probably shouldn't be reading this...");
             item.width = 20;
             item.height = 20;
             item.rare = 1;
-            item.useStyle = 4;
-            item.useAnimation = 45;
-            item.useTime = 45;
-            item.consumable = true;
+            if (DLCConfig.MasoDLCmenu.instance.DevItemsNoFunction == true)
+            {
+                item.useStyle = 4;
+                item.useAnimation = 45;
+                item.useTime = 45;
+                item.consumable = true;
+            }
         }
 
         public override bool UseItem(Player player)
         {
-            if (player.itemAnimation > 0 && player.itemTime == 0)
+            if (DLCConfig.MasoDLCmenu.instance.DevItemsNoFunction == false)
             {
-                MasoDLCWorld.ThunderBirdCount = 0;
-                MasoDLCWorld.JellyCount = 0;
-                MasoDLCWorld.VisCount = 0;
-                MasoDLCWorld.GraniteCount = 0;
-                MasoDLCWorld.ChampionCount = 0;
-                MasoDLCWorld.ScouterCount = 0;
-                MasoDLCWorld.StriderCount = 0;
-                MasoDLCWorld.BeholderCount = 0;
-                MasoDLCWorld.LichCount = 0;
-                MasoDLCWorld.AbyssionCount = 0;
-                MasoDLCWorld.RagnarokCount = 0;
-                Main.PlaySound(15, (int)player.position.X, (int)player.position.Y, 0);
+                if (player.itemAnimation > 0 && player.itemTime == 0)
+                {
+                    MasoDLCWorld.ThunderBirdCount = 0;
+                    MasoDLCWorld.JellyCount = 0;
+                    MasoDLCWorld.VisCount = 0;
+                    MasoDLCWorld.GraniteCount = 0;
+                    MasoDLCWorld.ChampionCount = 0;
+                    MasoDLCWorld.ScouterCount = 0;
+                    MasoDLCWorld.StriderCount = 0;
+                    MasoDLCWorld.BeholderCount = 0;
+                    MasoDLCWorld.LichCount = 0;
+                    MasoDLCWorld.AbyssionCount = 0;
+                    MasoDLCWorld.RagnarokCount = 0;
+                    Main.PlaySound(15, (int)player.position.X, (int)player.position.Y, 0);
+                }
+                return true;
             }
-            return true;
+            return false;
         }
     }
 }

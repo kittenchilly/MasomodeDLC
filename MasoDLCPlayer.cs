@@ -14,6 +14,7 @@ namespace MasomodeDLC
 
 		private readonly Mod Thorium = ModLoader.GetMod("ThoriumMod");
 		private readonly Mod Calamity = ModLoader.GetMod("CalamityMod");
+		//private readonly Mod Redemption = ModLoader.GetMod("Redemption");
 		#region Buff Bools
 		public bool teslasurge;
 		public bool rubberWeapon;

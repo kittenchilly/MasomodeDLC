@@ -34,23 +34,27 @@ You probably shouldn't be reading this...");
 
         public override bool UseItem(Player player)
         {
-            if (player.itemAnimation > 0 && player.itemTime == 0)
+            if (DLCConfig.MasoDLCmenu.instance.DevItemsNoFunction == false)
             {
-                MasoDLCWorld.ThunderBirdCount = FargoSoulsWorld.MaxCountPreHM;
-                MasoDLCWorld.JellyCount = FargoSoulsWorld.MaxCountPreHM;
-                MasoDLCWorld.VisCount = FargoSoulsWorld.MaxCountPreHM;
-                MasoDLCWorld.GraniteCount = FargoSoulsWorld.MaxCountPreHM;
-                MasoDLCWorld.ChampionCount = FargoSoulsWorld.MaxCountPreHM;
-                MasoDLCWorld.ScouterCount = FargoSoulsWorld.MaxCountPreHM;
+                if (player.itemAnimation > 0 && player.itemTime == 0)
+                {
+                    MasoDLCWorld.ThunderBirdCount = FargoSoulsWorld.MaxCountPreHM;
+                    MasoDLCWorld.JellyCount = FargoSoulsWorld.MaxCountPreHM;
+                    MasoDLCWorld.VisCount = FargoSoulsWorld.MaxCountPreHM;
+                    MasoDLCWorld.GraniteCount = FargoSoulsWorld.MaxCountPreHM;
+                    MasoDLCWorld.ChampionCount = FargoSoulsWorld.MaxCountPreHM;
+                    MasoDLCWorld.ScouterCount = FargoSoulsWorld.MaxCountPreHM;
 
-                MasoDLCWorld.StriderCount = FargoSoulsWorld.MaxCountHM;
-                MasoDLCWorld.BeholderCount = FargoSoulsWorld.MaxCountHM;
-                MasoDLCWorld.LichCount = FargoSoulsWorld.MaxCountHM;
-                MasoDLCWorld.AbyssionCount = FargoSoulsWorld.MaxCountHM;
-                MasoDLCWorld.RagnarokCount = FargoSoulsWorld.MaxCountHM;
-                Main.PlaySound(15, (int)player.position.X, (int)player.position.Y, 0);
+                    MasoDLCWorld.StriderCount = FargoSoulsWorld.MaxCountHM;
+                    MasoDLCWorld.BeholderCount = FargoSoulsWorld.MaxCountHM;
+                    MasoDLCWorld.LichCount = FargoSoulsWorld.MaxCountHM;
+                    MasoDLCWorld.AbyssionCount = FargoSoulsWorld.MaxCountHM;
+                    MasoDLCWorld.RagnarokCount = FargoSoulsWorld.MaxCountHM;
+                    Main.PlaySound(15, (int)player.position.X, (int)player.position.Y, 0);
+                }
+                return true;
             }
-            return true;
+            return false;
         }
     }
 }

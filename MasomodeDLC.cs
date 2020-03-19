@@ -1,19 +1,21 @@
 using Terraria;
 using Terraria.ModLoader;
+using ThoriumMod;
 
 namespace MasomodeDLC
 {
     public class MasomodeDLC : Mod
     {
+        private readonly Mod Thorium = ModLoader.GetMod("ThoriumMod");
+        private readonly Mod Calamity = ModLoader.GetMod("CalamityMod");
+        //private readonly Mod Redemption = ModLoader.GetMod("Redemption");
         public MasomodeDLC()
         {
+
         }
 
-        public static bool NoInvasion(NPCSpawnInfo spawnInfo)
-        {
-            return !spawnInfo.invasion && (!Main.pumpkinMoon && !Main.snowMoon || spawnInfo.spawnTileY > Main.worldSurface || Main.dayTime) &&
+        public static bool NoInvasion(NPCSpawnInfo spawnInfo) => !spawnInfo.invasion && (!Main.pumpkinMoon && !Main.snowMoon || spawnInfo.spawnTileY > Main.worldSurface || Main.dayTime) &&
                    (!Main.eclipse || spawnInfo.spawnTileY > Main.worldSurface || !Main.dayTime);
-        }
 
         public static bool NoBiome(NPCSpawnInfo spawnInfo)
         {
@@ -21,34 +23,46 @@ namespace MasomodeDLC
             return !player.ZoneJungle && !player.ZoneDungeon && !player.ZoneCorrupt && !player.ZoneCrimson && !player.ZoneHoly && !player.ZoneSnow && !player.ZoneUndergroundDesert;
         }
 
-        public static bool NoZoneAllowWater(NPCSpawnInfo spawnInfo)
+        public static bool NoZoneAllowWater(NPCSpawnInfo spawnInfo) => !spawnInfo.sky && !spawnInfo.player.ZoneMeteor && !spawnInfo.spiderCave;
+
+        public static bool NoZone(NPCSpawnInfo spawnInfo) => NoZoneAllowWater(spawnInfo) && !spawnInfo.water;
+
+        public static bool NormalSpawn(NPCSpawnInfo spawnInfo) => !spawnInfo.playerInTown && NoInvasion(spawnInfo);
+
+        public static bool NoZoneNormalSpawn(NPCSpawnInfo spawnInfo) => NormalSpawn(spawnInfo) && NoZone(spawnInfo);
+
+        public static bool NoZoneNormalSpawnAllowWater(NPCSpawnInfo spawnInfo) => NormalSpawn(spawnInfo) && NoZoneAllowWater(spawnInfo);
+
+        public static bool NoBiomeNormalSpawn(NPCSpawnInfo spawnInfo) => NormalSpawn(spawnInfo) && NoBiome(spawnInfo) && NoZone(spawnInfo);
+
+        public override void Load()
         {
-            return !spawnInfo.sky && !spawnInfo.player.ZoneMeteor && !spawnInfo.spiderCave;
+            
         }
 
-        public static bool NoZone(NPCSpawnInfo spawnInfo)
+        public override void PostSetupContent()
         {
-            return NoZoneAllowWater(spawnInfo) && !spawnInfo.water;
+            base.PostSetupContent();
         }
 
-        public static bool NormalSpawn(NPCSpawnInfo spawnInfo)
+        public override void Unload()
         {
-            return !spawnInfo.playerInTown && NoInvasion(spawnInfo);
+            
         }
-
-        public static bool NoZoneNormalSpawn(NPCSpawnInfo spawnInfo)
+        public override void UpdateMusic(ref int music, ref MusicPriority priority)
         {
-            return NormalSpawn(spawnInfo) && NoZone(spawnInfo);
-        }
+            /* TODO: get more music for these easter eggs, we have redemption
+            if(Thorium != null)
+            {
+                if (ModContent.GetInstance<ThoriumPlayer>().ZoneAqua)
+                {
 
-        public static bool NoZoneNormalSpawnAllowWater(NPCSpawnInfo spawnInfo)
-        {
-            return NormalSpawn(spawnInfo) && NoZoneAllowWater(spawnInfo);
-        }
+                }
+            }
+            if (Calamity != null)
+            {
 
-        public static bool NoBiomeNormalSpawn(NPCSpawnInfo spawnInfo)
-        {
-            return NormalSpawn(spawnInfo) && NoBiome(spawnInfo) && NoZone(spawnInfo);
+            }*/
         }
     }
 }

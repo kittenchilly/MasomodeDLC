@@ -1,16 +1,11 @@
 using CalamityMod.CalPlayer;
 using MasomodeDLC.Calamity.Buffs;
 using Terraria;
+using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
 using ThoriumMod.Buffs;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
-using Terraria.Graphics.Effects;
-using Terraria.Graphics.Shaders;
-using Terraria.UI;
 
 namespace MasomodeDLC
 {

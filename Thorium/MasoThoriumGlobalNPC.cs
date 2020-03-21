@@ -2,6 +2,7 @@ using FargowiltasSouls;
 using FargowiltasSouls.Buffs.Masomode;
 using FargowiltasSouls.NPCs;
 using FargowiltasSouls.Projectiles.Masomode;
+using MasomodeDLC.Thorium.Buffs;
 using MasomodeDLC.Thorium.Projectiles;
 using Microsoft.Xna.Framework;
 using System;
@@ -15,6 +16,7 @@ using ThoriumMod.NPCs;
 using ThoriumMod.NPCs.Bat;
 using ThoriumMod.NPCs.Beholder;
 using ThoriumMod.NPCs.Blizzard;
+using ThoriumMod.NPCs.BloodMoon;
 using ThoriumMod.NPCs.Buried;
 using ThoriumMod.NPCs.Contracts;
 using ThoriumMod.NPCs.Depths;
@@ -809,6 +811,36 @@ namespace MasomodeDLC.Thorium
 					{
 						target.AddBuff(BuffID.Frostburn, 240);
 						target.AddBuff(BuffType<EnemyFrozen>(), 240);
+					}
+					if (npc.type == NPCType<FrostWormHead>()
+					 || npc.type == NPCType<SnowEater>()
+					 || npc.type == NPCType<ChilledSpitter>()
+					 || npc.type == NPCType<Freezer>()
+					 || npc.type == NPCType<Coolmera>()
+					 || npc.type == NPCType<FrozenFace>()
+					 || npc.type == NPCType<Coldling>()
+					 || npc.type == NPCType<FrozenGross>())
+					{
+						target.AddBuff(BuffType<Clouded>(), 180);
+					}
+					if (npc.type == NPCType<Globee>()
+					 || npc.type == NPCType<MorayHead>()
+					 || npc.type == NPCType<WindElemental>()
+					 || npc.type == NPCType<UFO>()
+					 || npc.type == NPCType<LostProbe>()
+					 || npc.type == NPCType<Gnome3>())
+					{
+						target.AddBuff(BuffType<Teslasurge>(), 300);
+					}
+					if (npc.type == NPCID.DD2JavelinstT2
+					 || npc.type == NPCID.DD2JavelinstT3
+					 || npc.type == NPCType<Sharptooth>()
+					 || npc.type == NPCType<GraveLimb>()
+					 || npc.type == NPCType<ScissorStalker>()
+					 || npc.type == NPCID.GreekSkeleton
+					 || npc.type == NPCType<GoblinTrapper>())
+					{
+						target.AddBuff(BuffType<WristPain>(), 300);
 					}
 				}
 				else

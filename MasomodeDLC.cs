@@ -1,9 +1,9 @@
-using Terraria;
-using Terraria.ModLoader;
-using ThoriumMod;
 using Microsoft.Xna.Framework.Graphics;
+using Terraria;
 using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace MasomodeDLC
 {
@@ -50,7 +50,7 @@ namespace MasomodeDLC
 
         public override void Load()
         {
-            
+
         }
 
         public override void PostSetupContent()
@@ -60,7 +60,7 @@ namespace MasomodeDLC
 
         public override void Unload()
         {
-            
+
         }
         public override void UpdateMusic(ref int music, ref MusicPriority priority)
         {

@@ -1,14 +1,13 @@
 using FargowiltasSouls;
 using FargowiltasSouls.NPCs;
+using FargowiltasSouls.Projectiles.AbomBoss;
+using MasomodeDLC.Thorium.Buffs;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
-using ThoriumMod.NPCs;
 using ThoriumMod.NPCs.Bat;
 using ThoriumMod.NPCs.Beholder;
 using ThoriumMod.NPCs.Blizzard;
 using ThoriumMod.NPCs.Buried;
-using ThoriumMod.NPCs.Contracts;
 using ThoriumMod.NPCs.Depths;
 using ThoriumMod.NPCs.EndofDays;
 using ThoriumMod.NPCs.Granite;
@@ -276,7 +275,11 @@ namespace MasomodeDLC.Thorium
                     projectile.type == ProjectileType<ThunderGust>()
                     )
                     {
-                        target.AddBuff(BuffID.Electrified, 300);
+                        target.AddBuff(BuffType<Teslasurge>(), 180);
+                    }
+                    if (projectile.type == ProjectileType<AbomFrostShard>())
+                    {
+                        target.AddBuff(BuffType<WristPain>(), 300);
                     }
                 }
             }

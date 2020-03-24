@@ -48,11 +48,6 @@ namespace MasomodeDLC
 
         public static bool NoBiomeNormalSpawn(NPCSpawnInfo spawnInfo) => NormalSpawn(spawnInfo) && NoBiome(spawnInfo) && NoZone(spawnInfo);
 
-        public override void Load()
-        {
-
-        }
-
         public override void PostSetupContent()
         {
             base.PostSetupContent();
@@ -67,10 +62,7 @@ namespace MasomodeDLC
             /* TODO: get more music for these easter eggs, we have redemption
             if(Thorium != null)
             {
-                if (ModContent.GetInstance<ThoriumPlayer>().ZoneAqua)
-                {
 
-                }
             }
             if (Calamity != null)
             {

@@ -1,5 +1,6 @@
 using CalamityMod.CalPlayer;
 using MasomodeDLC.Calamity.Buffs;
+using MasomodeDLC.Thorium.Buffs;
 using Terraria;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
@@ -22,6 +23,7 @@ namespace MasomodeDLC
 		public bool wristpain;
 		public bool creativeblank;
 		public bool displayClouds;
+		public bool abyssalDrag;
 		#endregion
 
 
@@ -90,9 +92,9 @@ namespace MasomodeDLC
 			}
 			if (Thorium != null)
 			{
-				if (player.GetModPlayer<ThoriumPlayer>().ZoneAqua && ThoriumWorld.downedJelly)
+				if (player.GetModPlayer<ThoriumPlayer>().ZoneAqua && !ThoriumWorld.downedJelly)
 				{
-					//TODO: Abyssal Drag inflict
+					player.AddBuff(ModContent.BuffType<DontGoIntoTheFuckingAquaticDepthsBeforeQueen>(), 2); //hahayes
 					player.AddBuff(BuffID.NoBuilding, 2);
 				}
 				if (player.ZoneJungle && !ThoriumWorld.downedBloom)
@@ -106,17 +108,23 @@ namespace MasomodeDLC
 		{
 			if (Thorium != null)
 			{
-				if (player.HasBuff(Thorium.BuffType("EnemyFrozen")))
+				if (player.HasBuff(ModContent.BuffType<EnemyFrozen>()))
 				{
 					player.runAcceleration /= 2f;
 					player.maxRunSpeed *= 0.666666666f;
 				}
-				if (player.HasBuff(mod.BuffType("Teslasurge")))
+				if (player.HasBuff(ModContent.BuffType<Teslasurge>()))
 				{
 					for (int i = 60; i == 0; i--)
 					{
 						player.maxRunSpeed += Main.rand.NextFloat(-0.25f, 0.25f);
 					}
+				}
+				if (player.HasBuff(ModContent.BuffType<DontGoIntoTheFuckingAquaticDepthsBeforeQueen>()))
+				{
+					player.maxRunSpeed = 0.6f;
+					player.maxFallSpeed += 1f;
+					//how are we supposed to restrict vertical movement effectively
 				}
 			}
 
@@ -132,6 +140,7 @@ namespace MasomodeDLC
 			wristpain = false;
 			creativeblank = false;
 			displayClouds = false;
+			abyssalDrag = false;
 		}
 		public override void UpdateDead()
 		{
@@ -140,6 +149,7 @@ namespace MasomodeDLC
 			wristpain = false;
 			creativeblank = false;
 			displayClouds = false;
+			abyssalDrag = false;
 		}
 		public override void UpdateBadLifeRegen()
 		{
@@ -151,6 +161,15 @@ namespace MasomodeDLC
 				}
 				player.lifeRegenTime = 0;
 				player.lifeRegen -= 8;
+			}
+			if (abyssalDrag && !player.wet)
+			{
+				if (player.lifeRegen > 0)
+				{
+					player.lifeRegen = 0;
+				}
+				player.lifeRegenTime = 0;
+				player.lifeRegen -= 16000000;
 			}
 		}
 		public override void DrawEffects(PlayerDrawInfo drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)

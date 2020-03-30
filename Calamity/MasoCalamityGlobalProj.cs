@@ -32,7 +32,7 @@ namespace MasomodeDLC.Calamity
 
         public override bool Autoload(ref string name)
         {
-            return ModLoader.GetMod("ThoriumMod") != null;
+            return ModLoader.GetMod("CalamityMod") != null;
         }
 
         public override bool PreAI(Projectile proj)

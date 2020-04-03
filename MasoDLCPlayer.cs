@@ -1,12 +1,10 @@
-using CalamityMod.CalPlayer;
+using System.Reflection;
 using MasomodeDLC.Calamity.Buffs;
 using MasomodeDLC.Thorium.Buffs;
 using Terraria;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.ModLoader;
-using ThoriumMod;
-using ThoriumMod.Buffs;
 
 namespace MasomodeDLC
 {
@@ -17,7 +15,8 @@ namespace MasomodeDLC
 		private readonly Mod Thorium = ModLoader.GetMod("ThoriumMod");
 		private readonly Mod Calamity = ModLoader.GetMod("CalamityMod");
 		//private readonly Mod Redemption = ModLoader.GetMod("Redemption");
-		#region Buff Bools
+		#region Buff/effect flags
+		#region Thorium
 		public bool teslasurge;
 		public bool rubberWeapon;
 		public bool wristpain;
@@ -25,8 +24,24 @@ namespace MasomodeDLC
 		public bool displayClouds;
 		public bool abyssalDrag;
 		#endregion
+		#region Calamity
+		public bool voidVessel;
+		public bool antimatterDoll;
+		#endregion
+		#endregion
 
+		public override void ResetEffects()
+		{
+			teslasurge = false;
+			rubberWeapon = false;
+			wristpain = false;
+			creativeblank = false;
+			displayClouds = false;
+			abyssalDrag = false;
 
+			voidVessel = false;
+			antimatterDoll = false;
+		}
 
 		public override void ModifyHitNPC(Item item, NPC target, ref int damage, ref float knockback, ref bool crit)
 		{
@@ -85,37 +100,44 @@ namespace MasomodeDLC
 		{
 			if (Calamity != null)
 			{
-				if (player.GetModPlayer<CalamityPlayer>().ZoneSunkenSea && player.wet)
+				ModPlayer calPlayer = player.GetModPlayer(Calamity, "CalamityPlayer");
+				FieldInfo field = calPlayer.GetType().GetField("ZoneSunkenSea");
+				var zoneSunkenSea = field.GetValue(calPlayer); // for getting the value of the field
+				if ((bool)zoneSunkenSea && player.wet)
 				{
 					player.AddBuff(Main.hardMode ? ModContent.BuffType<ForcedZen>() : ModContent.BuffType<ForcedPeace>(), 2);
 				}
 			}
 			if (Thorium != null)
 			{
-				if (player.GetModPlayer<ThoriumPlayer>().ZoneAqua && !ThoriumWorld.downedJelly)
+				ModPlayer thoriumPlayer = player.GetModPlayer(Thorium, "ThoriumPlayer");
+				FieldInfo field = thoriumPlayer.GetType().GetField("ZoneAqua");
+				var zoneAquaticDepths = field.GetValue(thoriumPlayer); // for getting the value of the field
+				if ((bool)zoneAquaticDepths && !ThorWorldBools.DownedJellyfishJam)
 				{
 					player.AddBuff(ModContent.BuffType<DontGoIntoTheFuckingAquaticDepthsBeforeQueen>(), 2); //hahayes
 					player.AddBuff(BuffID.NoBuilding, 2);
 				}
-				if (player.ZoneJungle && !ThoriumWorld.downedBloom)
+				if (player.ZoneJungle && !ThorWorldBools.DownedCoolBloomFacts)
 				{
-					player.AddBuff(ModContent.BuffType<PoisonHeart>(), 2);
+					player.AddBuff(ThorBuffIDs.TaintedHearts, 2);
 				}
 			}
 		}
 
 		public override void PostUpdateRunSpeeds()
 		{
+			#region Thorium
 			if (Thorium != null)
 			{
-				if (player.HasBuff(ModContent.BuffType<EnemyFrozen>()))
+				if (player.HasBuff(ThorBuffIDs.Freezing))
 				{
 					player.runAcceleration /= 2f;
 					player.maxRunSpeed *= 0.666666666f;
 				}
 				if (player.HasBuff(ModContent.BuffType<Teslasurge>()))
 				{
-					for (int i = 60; i == 0; i--)
+					for (int i = 0; i < 60; i++)
 					{
 						player.maxRunSpeed += Main.rand.NextFloat(-0.25f, 0.25f);
 					}
@@ -125,22 +147,17 @@ namespace MasomodeDLC
 					player.maxRunSpeed = 0.6f;
 					player.maxFallSpeed += 1f;
 					//how are we supposed to restrict vertical movement effectively
+					player.velocity.Y += 0.333f;
+					// Something like that for now, will look further into this later  -Thomas
 				}
 			}
-
+			#endregion
+			#region Calamity
 			if (Calamity != null)
 			{
 
 			}
-		}
-		public override void ResetEffects()
-		{
-			teslasurge = false;
-			rubberWeapon = false;
-			wristpain = false;
-			creativeblank = false;
-			displayClouds = false;
-			abyssalDrag = false;
+			#endregion
 		}
 		public override void UpdateDead()
 		{
@@ -169,7 +186,7 @@ namespace MasomodeDLC
 					player.lifeRegen = 0;
 				}
 				player.lifeRegenTime = 0;
-				player.lifeRegen -= 16000000;
+				player.lifeRegen -= 16000000; // literally death
 			}
 		}
 		public override void DrawEffects(PlayerDrawInfo drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)

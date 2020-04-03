@@ -1,22 +1,11 @@
-using CalamityMod.CalPlayer;
-using CalamityMod.Items.Materials;
-using CalamityMod.Items.Potions;
-using CalamityMod.NPCs.Crabulon;
-using CalamityMod.NPCs.DesertScourge;
-using CalamityMod.NPCs.HiveMind;
-using CalamityMod.NPCs.NormalNPCs;
-using CalamityMod.NPCs.Perforator;
-using CalamityMod.NPCs.SlimeGod;
-using CalamityMod.NPCs.SunkenSea;
-using CalamityMod.Projectiles.Melee;
-using CalamityMod.World;
+using System;
+using System.Collections.Generic;
+using System.Reflection;
 using FargowiltasSouls;
 using FargowiltasSouls.Buffs.Masomode;
 using FargowiltasSouls.NPCs;
 using MasomodeDLC.Calamity.Buffs;
 using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent.Events;
 using Terraria.ID;
@@ -25,7 +14,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace MasomodeDLC.Calamity
 {
-    public class MasoCalamityGlobalNPC : GlobalNPC
+	public class MasoCalamityGlobalNPC : GlobalNPC
     {
         public override bool Autoload(ref string name)
         {
@@ -96,35 +85,33 @@ namespace MasomodeDLC.Calamity
             bool solarEclipse = surface && day && Main.eclipse;
             bool martianMadness = Main.invasionType == 4;
             bool lunarEvents = NPC.LunarApocalypseIsUp && (nebulaTower || vortexTower || stardustTower || solarTower);
-            bool monsterMadhouse = MMWorld.MMArmy;
 
-            //no work?
-            //is lava on screen
+
             bool nearLava = Collision.LavaCollision(spawnInfo.player.position, spawnInfo.spawnTileX, spawnInfo.spawnTileY);
             bool noInvasion = MasomodeDLC.NoInvasion(spawnInfo);
             bool normalSpawn = !spawnInfo.playerInTown && noInvasion && !oldOnesArmy;
 
             bool sinisterIcon = spawnInfo.player.GetModPlayer<FargoPlayer>().SinisterIcon;
 
-            if (FargoSoulsWorld.MasochistMode)
-            {
-                if (Calamity != null)
-                {
-                    if (night && surface)
-                    {
-                        pool[NPCType<BlightedEye>()] = (CalamityWorld.downedPerforator || CalamityWorld.downedHiveMind) ? 0.0215f : 0f;
-                        pool[NPCType<CalamityEye>()] = CalamityWorld.downedCalamitas ? 0.185f : 0f;
-                    }
-                    if (desert)
-                    {
-                        pool[NPCType<DriedSeekerHead>()] = CalamityWorld.downedDesertScourge ? 0.037f : 0.0145f;
-                    }
-                    if (underworld && !spawnInfo.player.GetModPlayer<CalamityPlayer>().ZoneCalamity)
-                    {
-                        pool[NPCType<CalamityEye>()] = CalamityWorld.downedCalamitas ? 0.212f : 0f;
-                    }
-                }
-            }
+			if (FargoSoulsWorld.MasochistMode)
+			{
+				if (night && surface)
+				{
+					pool[ClamNPCIDs.BlightedEye] = (ClamWorldBools.DownedCuteAnimeHiveMind || ClamWorldBools.DownedPerfs) ? 0.0215f : 0f;
+					pool[ClamNPCIDs.CalamityEye] = ClamWorldBools.DownedBootlegCalamitas ? 0.185f : 0f;
+				}
+				if (desert)
+				{
+					pool[ClamNPCIDs.DriedSeekerHead] = ClamWorldBools.DownedDessertWorm ? 0.037f : 0.0145f;
+				}
+				ModPlayer calPlayer = spawnInfo.player.GetModPlayer(Calamity, "CalamityPlayer");
+				FieldInfo field = calPlayer.GetType().GetField("ZoneCalamity");
+				var zoneCalamity = field.GetValue(calPlayer); // for getting the value of the field
+				if (underworld && !(bool)zoneCalamity)
+				{
+					pool[ClamNPCIDs.CalamityEye] = ClamWorldBools.DownedBootlegCalamitas ? 0.154f : 0f;
+				}
+			}
         }
 
         public override void EditSpawnRate(Player player, ref int spawnRate, ref int maxSpawns)
@@ -149,17 +136,17 @@ namespace MasomodeDLC.Calamity
         public override void SetDefaults(NPC npc)
         {
             FargoSoulsGlobalNPC fargoSoulsGlobalNPC = npc.GetGlobalNPC<FargoSoulsGlobalNPC>();
-
             if (FargoSoulsWorld.MasochistMode)
-            {if (Calamity != null)
+            {
+				if (Calamity != null)
                 {
-                    if (npc.type == NPCType<StormlionCharger>())
+                    if (npc.type == ClamNPCIDs.StormlionCharger)
                     {
                         npc.lifeMax = 250;
                         npc.buffImmune[BuffID.Electrified] = true;
                         npc.buffImmune[BuffType<LightningRod>()] = true;
                     }
-                    if (npc.type == NPCType<GhostBell>())
+                    if (npc.type == ClamNPCIDs.GhostBell)
                     {
                         npc.buffImmune[BuffID.Electrified] = true;
                         if (Main.hardMode)
@@ -171,115 +158,92 @@ namespace MasomodeDLC.Calamity
 
         public override void ScaleExpertStats(NPC npc, int numPlayers, float bossLifeScale)
         {
-            if (FargoSoulsWorld.MasochistMode)
-            {
-                if (Calamity != null)
-                {
-                    #region Boss Scaling
-                    if (npc.type == NPCType<DesertScourgeHead>() ||
-                        npc.type == NPCType<DesertScourgeBody>() ||
-                        npc.type == NPCType<DesertScourgeTail>() ||
-                        npc.type == NPCType<DesertScourgeHeadSmall>() ||
-                        npc.type == NPCType<DesertScourgeBodySmall>() ||
-                        npc.type == NPCType<DesertScourgeTailSmall>())
-                    {
-                        npc.lifeMax = (int)(npc.lifeMax * (1 + MasoDLCWorld.DesertWormBossCount * .025));
-                        npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.DesertWormBossCount * .0125));
-                    }
+			if (FargoSoulsWorld.MasochistMode)
+			{
+				#region Boss Scaling
+				if (npc.type == ClamNPCIDs.SandScourgeHead ||
+					npc.type == ClamNPCIDs.SandScourgeBody ||
+					npc.type == ClamNPCIDs.SandScourgeTail ||
+					npc.type == ClamNPCIDs.SandScourgeHeadSmall ||
+					npc.type == ClamNPCIDs.SandScourgeBodySmall ||
+					npc.type == ClamNPCIDs.SandScourgeTailSmall)
+				{
+					npc.lifeMax = (int)(npc.lifeMax * (1 + MasoDLCWorld.DesertWormBossCount * .025));
+					npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.DesertWormBossCount * .0125));
+				}
 
-                    if ((npc.type == NPCType<DriedSeekerHead>() ||
-                        npc.type == NPCType<DriedSeekerBody>() ||
-                        npc.type == NPCType<DriedSeekerTail>()) && NPC.AnyNPCs(NPCType<DesertScourgeHead>()))
-                    {
-                        npc.lifeMax = (int)(npc.lifeMax * (1 + MasoDLCWorld.DesertWormBossCount * .025));
-                        npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.DesertWormBossCount * .025));
-                    }
+				if ((npc.type == ClamNPCIDs.DriedSeekerHead ||
+					npc.type == ClamNPCIDs.DriedSeekerBody ||
+					npc.type == ClamNPCIDs.DriedSeekerTail) && NPC.AnyNPCs(ClamNPCIDs.SandScourgeHead))
+				{
+					npc.lifeMax = (int)(npc.lifeMax * (1 + MasoDLCWorld.DesertWormBossCount * .025));
+					npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.DesertWormBossCount * .025));
+				}
 
-                    if (npc.type == NPCType<CrabulonIdle>() ||
-                        npc.type == NPCType<CrabShroom>())
-                    {
-                        npc.lifeMax = (int)(npc.lifeMax * (1 + MasoDLCWorld.CrabRaveCount * .025));
-                        npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.CrabRaveCount * .0125));
-                    }
+				if (npc.type == ClamNPCIDs.Crabulon ||
+					npc.type == ClamNPCIDs.CrabulonShroom)
+				{
+					npc.lifeMax = (int)(npc.lifeMax * (1 + MasoDLCWorld.CrabRaveCount * .025));
+					npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.CrabRaveCount * .0125));
+				}
 
-                    if (npc.type == NPCType<HiveMind>() ||
-                        npc.type == NPCType<HiveMindP2>() ||
-                        npc.type == NPCType<HiveBlob>() ||
-                        npc.type == NPCType<HiveBlob2>() ||
-                        npc.type == NPCType<DankCreeper>() ||
-                        npc.type == NPCType<DarkHeart>())
-                    {
-                        npc.lifeMax = (int)(npc.lifeMax * (1 + MasoDLCWorld.HiiHMiiMCount * .025));
-                        npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.HiiHMiiMCount * .0125));
-                    }
+				if (npc.type == ClamNPCIDs.HiiHMiiM ||
+					npc.type == ClamNPCIDs.HiiHMiiM2 ||
+					npc.type == ClamNPCIDs.HiveBlob ||
+					npc.type == ClamNPCIDs.HiveBlob2 ||
+					npc.type == ClamNPCIDs.DankCreeperAwMan ||
+					npc.type == ClamNPCIDs.DarkHeart)
+				{
+					npc.lifeMax = (int)(npc.lifeMax * (1 + MasoDLCWorld.HiiHMiiMCount * .025));
+					npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.HiiHMiiMCount * .0125));
+				}
 
-                    if ((npc.type == NPCID.EaterofSouls ||
-                         npc.type == NPCID.DevourerHead ||
-                         npc.type == NPCID.DevourerBody ||
-                         npc.type == NPCID.DevourerTail) && (NPC.AnyNPCs(NPCType<HiveMind>()) || NPC.AnyNPCs(NPCType<HiveMindP2>())))
-                    {
-                        npc.lifeMax = (int)(npc.lifeMax * (1 + MasoDLCWorld.HiiHMiiMCount * .025));
-                        npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.HiiHMiiMCount * .0125));
-                    }
-                    if (npc.type == NPCType<PerforatorHive>() ||
-                        npc.type == NPCType<PerforatorHeadSmall>() ||
-                        npc.type == NPCType<PerforatorBodySmall>() ||
-                        npc.type == NPCType<PerforatorTailSmall>() ||
-                        npc.type == NPCType<PerforatorHeadMedium>() ||
-                        npc.type == NPCType<PerforatorBodyMedium>() ||
-                        npc.type == NPCType<PerforatorTailMedium>() ||
-                        npc.type == NPCType<PerforatorHeadLarge>() ||
-                        npc.type == NPCType<PerforatorBodyLarge>() ||
-                        npc.type == NPCType<PerforatorTailLarge>())
-                    {
-                        npc.lifeMax = (int)(npc.lifeMax * (1 + MasoDLCWorld.BloodyWormBossesCount * .025));
-                        npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.BloodyWormBossesCount * .0125));
-                    }
+				if ((npc.type == NPCID.EaterofSouls ||
+					 npc.type == NPCID.DevourerHead ||
+					 npc.type == NPCID.DevourerBody ||
+					 npc.type == NPCID.DevourerTail) && (NPC.AnyNPCs(ClamNPCIDs.HiiHMiiM) || NPC.AnyNPCs(ClamNPCIDs.HiiHMiiM2)))
+				{
+					npc.lifeMax = (int)(npc.lifeMax * (1 + MasoDLCWorld.HiiHMiiMCount * .025));
+					npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.HiiHMiiMCount * .0125));
+				}
+				if (npc.type == ClamNPCIDs.PerfHive ||
+					npc.type == ClamNPCIDs.PerfWormHeadSmall ||
+					npc.type == ClamNPCIDs.PerfWormBodySmall ||
+					npc.type == ClamNPCIDs.PerfWormTailSmall ||
+					npc.type == ClamNPCIDs.PerfWormHeadMedium ||
+					npc.type == ClamNPCIDs.PerfWormBodyMedium ||
+					npc.type == ClamNPCIDs.PerfWormTailMedium ||
+					npc.type == ClamNPCIDs.PerfWormHeadBig ||
+					npc.type == ClamNPCIDs.PerfWormBodyBig ||
+					npc.type == ClamNPCIDs.PerfWormTailBig)
+				{
+					npc.lifeMax = (int)(npc.lifeMax * (1 + MasoDLCWorld.BloodyWormBossesCount * .025));
+					npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.BloodyWormBossesCount * .0125));
+				}
 
-                    if (npc.type == NPCType<SlimeGodCore>() ||
-                        npc.type == NPCType<SlimeGod>() ||
-                        npc.type == NPCType<SlimeGodSplit>() ||
-                        npc.type == NPCType<SlimeGodRun>() ||
-                        npc.type == NPCType<SlimeGodRunSplit>() ||
-                        npc.type == NPCType<SlimeSpawnCorrupt>() ||
-                        npc.type == NPCType<SlimeSpawnCrimson>() ||
-                        npc.type == NPCType<SlimeSpawnCrimson2>())
-                    {
-                        npc.lifeMax = (int)(npc.lifeMax * (1 + MasoDLCWorld.BloodyWormBossesCount * .025));
-                        npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.BloodyWormBossesCount * .0125));
-                    }
-                    npc.GetGlobalNPC<MasoCalamityGlobalNPC>().CachedDamage = npc.damage;
-                    #endregion
-                }
-            }
+				if (npc.type == ClamNPCIDs.SlimeGodCore ||
+					npc.type == ClamNPCIDs.SlimeGodWhichOneIsWhich ||
+					npc.type == ClamNPCIDs.SlimeGodWhichOneIsWhichSplit ||
+					npc.type == ClamNPCIDs.SlimeGodWhichOtherOneIsWhich ||
+					npc.type == ClamNPCIDs.SlimeGodWhichOtherOneIsWhichSplit ||
+					npc.type == ClamNPCIDs.SlimeGodSpawnCorrupt ||
+					npc.type == ClamNPCIDs.SlimeGodSpawnCrimson ||
+					npc.type == ClamNPCIDs.SlimeGodSpawnCrimson2)
+				{
+					npc.lifeMax = (int)(npc.lifeMax * (1 + MasoDLCWorld.TwoBiomeMimicsAndAFlockoCount * .025));
+					npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.TwoBiomeMimicsAndAFlockoCount * .0125));
+				}
+				npc.GetGlobalNPC<MasoCalamityGlobalNPC>().CachedDamage = npc.damage;
+				#endregion
+			}
         }
 
         public override bool PreAI(NPC npc)
         {
             Player player = Main.player[npc.target];
-            if (FargoSoulsWorld.MasochistMode)
-            {
-                if (Calamity != null)
-                {
-                    if (npc.type == NPCType<GhostBell>())
-                    {
-                        npc.GetGlobalNPC<MasoCalamityGlobalNPC>().masoFloat[0] += 1;
-                        if (npc.GetGlobalNPC<MasoCalamityGlobalNPC>().masoFloat[0] >= 400)
-                        {
-                            Aura(npc, 180, BuffID.Electrified, false, DustID.Electric);
-                            npc.dontTakeDamage = true;
-                        }
-                        else
-                        {
-                            npc.dontTakeDamage = false;
-                        }
-                        if (npc.GetGlobalNPC<MasoCalamityGlobalNPC>().masoFloat[0] >= 600)
-                        {
-                            npc.GetGlobalNPC<MasoCalamityGlobalNPC>().masoFloat[0] = 0;
-                        }
-                    }
-                }
-            }
+			if (FargoSoulsWorld.MasochistMode)
+			{
+			}
             return true;
         }
 
@@ -287,68 +251,86 @@ namespace MasomodeDLC.Calamity
         {
             if (FargoSoulsWorld.MasochistMode)
             {
-                if (Calamity != null)
-                {
-                    if (npc.damage != CachedDamage)
-                    {
-                        if (npc.type == NPCType<DesertScourgeHead>() ||
-                            npc.type == NPCType<DesertScourgeBody>() ||
-                            npc.type == NPCType<DesertScourgeTail>() ||
-                            npc.type == NPCType<DesertScourgeHeadSmall>() ||
-                            npc.type == NPCType<DesertScourgeBodySmall>() ||
-                            npc.type == NPCType<DesertScourgeTailSmall>())
-                        {
-                            npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.DesertWormBossCount * .0125));
-                        }
+				if (Calamity != null)
+				{
+					if (npc.damage != CachedDamage)
+					{
+						if (npc.type == ClamNPCIDs.SandScourgeHead ||
+							npc.type == ClamNPCIDs.SandScourgeBody ||
+							npc.type == ClamNPCIDs.SandScourgeTail ||
+							npc.type == ClamNPCIDs.SandScourgeHeadSmall ||
+							npc.type == ClamNPCIDs.SandScourgeBodySmall ||
+							npc.type == ClamNPCIDs.SandScourgeTailSmall)
+						{
+							npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.DesertWormBossCount * .0125));
+						}
 
-                        if (npc.type == NPCType<CrabulonIdle>() ||
-                            npc.type == NPCType<CrabShroom>())
-                        {
-                            npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.CrabRaveCount * .0125));
-                        }
+						if (npc.type == ClamNPCIDs.Crabulon ||
+							npc.type == ClamNPCIDs.CrabulonShroom)
+						{
+							npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.CrabRaveCount * .0125));
+						}
 
-                        if (npc.type == NPCType<HiveMind>() ||
-                            npc.type == NPCType<HiveMindP2>() ||
-                            npc.type == NPCType<DankCreeper>() ||
-                            npc.type == NPCType<HiveBlob>() ||
-                            npc.type == NPCType<HiveBlob2>() ||
-                            npc.type == NPCType<DarkHeart>())
-                        {
-                            npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.HiiHMiiMCount * .0125));
-                        }
+						if (npc.type == ClamNPCIDs.HiiHMiiM ||
+							npc.type == ClamNPCIDs.HiiHMiiM2 ||
+							npc.type == ClamNPCIDs.DankCreeperAwMan ||
+							npc.type == ClamNPCIDs.HiveBlob ||
+							npc.type == ClamNPCIDs.HiveBlob2 ||
+							npc.type == ClamNPCIDs.DarkHeart)
+						{
+							npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.HiiHMiiMCount * .0125));
+						}
 
-                        if ((npc.type == NPCID.EaterofSouls ||
-                             npc.type == NPCID.DevourerHead ||
-                             npc.type == NPCID.DevourerBody ||
-                             npc.type == NPCID.DevourerTail) && (NPC.AnyNPCs(NPCType<HiveMind>()) || NPC.AnyNPCs(NPCType<HiveMindP2>())))
-                        {
-                            npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.HiiHMiiMCount * .0125));
-                        }
+						if ((npc.type == NPCID.EaterofSouls ||
+							 npc.type == NPCID.DevourerHead ||
+							 npc.type == NPCID.DevourerBody ||
+							 npc.type == NPCID.DevourerTail) && (NPC.AnyNPCs(ClamNPCIDs.HiiHMiiM) || NPC.AnyNPCs(ClamNPCIDs.HiiHMiiM2)))
+						{
+							npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.HiiHMiiMCount * .0125));
+						}
 
-                        if (npc.type == NPCType<PerforatorHive>() ||
-                            npc.type == NPCType<PerforatorHeadSmall>() ||
-                            npc.type == NPCType<PerforatorHeadMedium>() ||
-                            npc.type == NPCType<PerforatorHeadLarge>())
-                        {
-                            npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.BloodyWormBossesCount * .0125));
-                        }
+						if (npc.type == ClamNPCIDs.PerfHive ||
+							npc.type == ClamNPCIDs.PerfWormHeadBig ||
+							npc.type == ClamNPCIDs.PerfWormHeadMedium ||
+							npc.type == ClamNPCIDs.PerfWormHeadSmall)
+						{
+							npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.BloodyWormBossesCount * .0125));
+						}
 
-                        CachedDamage = npc.damage;
-                    }
-                }
+						CachedDamage = npc.damage;
+					}
 
-                if (npc.type == ModContent.NPCType<StormlionCharger>())
-                {
-                    npc.GetGlobalNPC<MasoCalamityGlobalNPC>().masoFloat[0] += 1;
-                    if (npc.GetGlobalNPC<MasoCalamityGlobalNPC>().masoFloat[0] >= 22)
-                    {
-                        npc.GetGlobalNPC<MasoCalamityGlobalNPC>().masoFloat[0] = 0;
-                        Projectile projectile = Projectile.NewProjectileDirect(npc.Center, new Vector2(0, 8).RotatedByRandom(30f), ModContent.ProjectileType<Spark>(), 35, 0f, Main.myPlayer, 0, 0);
-                        projectile.melee = false;
-                        projectile.friendly = false;
-                        projectile.hostile = true;
-                    }
-                }
+					if (npc.type == ClamNPCIDs.StormlionCharger)
+					{
+						npc.GetGlobalNPC<MasoCalamityGlobalNPC>().masoFloat[0] += 1;
+						if (npc.GetGlobalNPC<MasoCalamityGlobalNPC>().masoFloat[0] >= 22)
+						{
+							npc.GetGlobalNPC<MasoCalamityGlobalNPC>().masoFloat[0] = 0;
+							Projectile projectile = Projectile.NewProjectileDirect(npc.Center, new Vector2(0, 8).RotatedByRandom(30f), ClamProjectileIDs.AmidiasSpark, 35, 0f, Main.myPlayer, 0, 0);
+							projectile.melee = false;
+							projectile.friendly = false;
+							projectile.hostile = true;
+						}
+					}
+
+					if (npc.type == ClamNPCIDs.GhostBell)
+					{
+						npc.GetGlobalNPC<MasoCalamityGlobalNPC>().masoFloat[0] += 1;
+						if (npc.GetGlobalNPC<MasoCalamityGlobalNPC>().masoFloat[0] >= 400)
+						{
+							Aura(npc, 180, BuffID.Electrified, false, DustID.Electric);
+							npc.dontTakeDamage = true;
+						}
+						else
+						{
+							npc.dontTakeDamage = false;
+						}
+						if (npc.GetGlobalNPC<MasoCalamityGlobalNPC>().masoFloat[0] >= 600)
+						{
+							npc.GetGlobalNPC<MasoCalamityGlobalNPC>().masoFloat[0] = 0;
+						}
+					}
+				}
             }
         }
 
@@ -368,7 +350,7 @@ namespace MasomodeDLC.Calamity
             {
                 if (Calamity != null)
                 {
-                    if (npc.type == NPCType<StormlionCharger>())
+                    if (npc.type == ClamNPCIDs.StormlionCharger)
                     {
                         target.AddBuff(BuffType<LightningRod>(), 150);
                     }
@@ -382,37 +364,37 @@ namespace MasomodeDLC.Calamity
             {
                 if (Calamity != null)
                 {
-                    if (npc.type == NPCType<DesertScourgeHead>() && MasoDLCWorld.DesertWormBossCount < MasoDLCWorld.clamMaxCountPreHM)
+                    if (npc.type == ClamNPCIDs.SandScourgeHead && MasoDLCWorld.DesertWormBossCount < MasoDLCWorld.clamMaxCountPreHM)
                     {
                         MasoDLCWorld.DesertWormBossCount++;
                     }
 
-                    if (npc.type == NPCType<CrabulonIdle>() && MasoDLCWorld.CrabRaveCount < MasoDLCWorld.clamMaxCountPreHM)
+                    if (npc.type == ClamNPCIDs.Crabulon && MasoDLCWorld.CrabRaveCount < MasoDLCWorld.clamMaxCountPreHM)
                     {
                         MasoDLCWorld.CrabRaveCount++;
                     }
 
-                    if (npc.type == NPCType<HiveMindP2>() && MasoDLCWorld.HiiHMiiMCount < MasoDLCWorld.clamMaxCountPreHM)
+                    if (npc.type == ClamNPCIDs.HiiHMiiM2 && MasoDLCWorld.HiiHMiiMCount < MasoDLCWorld.clamMaxCountPreHM)
                     {
                         MasoDLCWorld.HiiHMiiMCount++;
                     }
 
-                    if (npc.type == NPCType<PerforatorHive>() && MasoDLCWorld.BloodyWormBossesCount < MasoDLCWorld.clamMaxCountPreHM)
+                    if (npc.type == ClamNPCIDs.PerfHive && MasoDLCWorld.BloodyWormBossesCount < MasoDLCWorld.clamMaxCountPreHM)
                     {
                         MasoDLCWorld.BloodyWormBossesCount++;
                     }
 
-                    if (npc.type == NPCType<SlimeGodCore>() && npc.boss && (!NPC.AnyNPCs(NPCType<SlimeGodSplit>()) || !NPC.AnyNPCs(NPCType<SlimeGodRunSplit>())) && MasoDLCWorld.TwoBiomeMimicsAndAFlockoCount < MasoDLCWorld.clamMaxCountPreHM)
+                    if (npc.type == ClamNPCIDs.SlimeGodCore && npc.boss && (!NPC.AnyNPCs(ClamNPCIDs.SlimeGodWhichOneIsWhichSplit) || !NPC.AnyNPCs(ClamNPCIDs.SlimeGodWhichOtherOneIsWhichSplit)) && MasoDLCWorld.TwoBiomeMimicsAndAFlockoCount < MasoDLCWorld.clamMaxCountPreHM)
                     {
                         MasoDLCWorld.TwoBiomeMimicsAndAFlockoCount++;
                     }
 
-                    if (npc.type == NPCType<SlimeGodSplit>() && npc.boss && (!NPC.AnyNPCs(NPCType<SlimeGodCore>()) || NPC.CountNPCS(NPCType<SlimeGodSplit>()) < 2 || NPC.AnyNPCs(NPCType<SlimeGodRunSplit>())) && MasoDLCWorld.TwoBiomeMimicsAndAFlockoCount < MasoDLCWorld.clamMaxCountPreHM)
+                    if (npc.type == ClamNPCIDs.SlimeGodWhichOneIsWhichSplit && npc.boss && (!NPC.AnyNPCs(ClamNPCIDs.SlimeGodCore) || NPC.CountNPCS(ClamNPCIDs.SlimeGodWhichOneIsWhichSplit) < 2 || NPC.AnyNPCs(ClamNPCIDs.SlimeGodWhichOtherOneIsWhichSplit)) && MasoDLCWorld.TwoBiomeMimicsAndAFlockoCount < MasoDLCWorld.clamMaxCountPreHM)
                     {
                         MasoDLCWorld.TwoBiomeMimicsAndAFlockoCount++;
                     }
 
-                    if (npc.type == NPCType<SlimeGodRunSplit>() && npc.boss && (!NPC.AnyNPCs(NPCType<SlimeGodCore>()) || !NPC.AnyNPCs(NPCType<SlimeGodSplit>()) || NPC.CountNPCS(NPCType<SlimeGodRunSplit>()) < 2) && MasoDLCWorld.TwoBiomeMimicsAndAFlockoCount < MasoDLCWorld.clamMaxCountPreHM)
+                    if (npc.type == ClamNPCIDs.SlimeGodWhichOtherOneIsWhichSplit && npc.boss && (!NPC.AnyNPCs(ClamNPCIDs.SlimeGodCore) || !NPC.AnyNPCs(ClamNPCIDs.SlimeGodWhichOneIsWhichSplit) || NPC.CountNPCS(ClamNPCIDs.SlimeGodWhichOtherOneIsWhichSplit) < 2) && MasoDLCWorld.TwoBiomeMimicsAndAFlockoCount < MasoDLCWorld.clamMaxCountPreHM)
                     {
                         MasoDLCWorld.TwoBiomeMimicsAndAFlockoCount++;
                     }
@@ -421,32 +403,29 @@ namespace MasomodeDLC.Calamity
             return true;
         }
 
-        public override bool PreNPCLoot(NPC npc)
-        {
-            Player player = Main.player[npc.GetGlobalNPC<MasoCalamityGlobalNPC>().lastPlayerAttack];
-            if (Calamity != null)
-            {
-                if (npc.type == NPCType<StormlionCharger>())
-                {
-                    if (player.GetModPlayer<FargoPlayer>().TimsConcoction)
-                        RunItemDropOnce(npc, ItemType<TriumphPotion>(), Main.rand.Next(1, 3 + 1));
-                }
+		public override bool PreNPCLoot(NPC npc)
+		{
+			Player player = Main.player[npc.GetGlobalNPC<MasoCalamityGlobalNPC>().lastPlayerAttack];
+			if (npc.type == ClamNPCIDs.CosmicElemental)
+			{
+				if (player.GetModPlayer<FargoPlayer>().TimsConcoction)
+					RunItemDropOnce(npc, ClamItemIDs.TriumphPotion, Main.rand.Next(1, 3 + 1));
+			}
 
-                if (npc.type == NPCType<GhostBell>())
-                {
-                    if (player.GetModPlayer<FargoPlayer>().TimsConcoction)
-                        RunItemDropOnce(npc, ItemType<TeslaPotion>(), 1, false, 2, 3);
-                }
+			if (npc.type == ClamNPCIDs.GhostBell)
+			{
+				if (player.GetModPlayer<FargoPlayer>().TimsConcoction)
+					RunItemDropOnce(npc, ClamItemIDs.TeslaPotion, Main.rand.Next(1, 3 + 1));
+			}
 
-                if (npc.type == NPCType<CalamityEye>())
-                {
-                    RunItemDropWhen(npc, CalamityWorld.downedCalamitas && FargoSoulsWorld.MasochistMode, ItemType<CalamityDust>(), 1, false, 1, 14);
-                    if (player.GetModPlayer<FargoPlayer>().TimsConcoction)
-                        RunItemDropWhen(npc, CalamityWorld.downedCalamitas, ItemType<CalamitasBrew>(), Main.rand.Next(2, 3 + 1));
-                }
-            }
-            return base.PreNPCLoot(npc);
-        }
+			if (npc.type == ClamNPCIDs.CalamityEye)
+			{
+				RunItemDropWhen(npc, ClamWorldBools.DownedBootlegCalamitas && FargoSoulsWorld.MasochistMode, ClamItemIDs.CalamityAsh, 1, false, 1, 14);
+				if (player.GetModPlayer<FargoPlayer>().TimsConcoction)
+					RunItemDropWhen(npc, ClamWorldBools.DownedBootlegCalamitas, ClamItemIDs.CalamitasBathWater, Main.rand.Next(2, 3 + 1));
+			}
+			return base.PreNPCLoot(npc);
+		}
 
         /// <summary>
         /// Drops the specified item if the chance to drop succeeds, defaults to a guaranteed drop.
@@ -590,17 +569,6 @@ namespace MasomodeDLC.Calamity
                 return false;
             }
         }
-        private static string NoteToEveryone = "I've come to make an announcement: Thomas the Pencil's a bitch-ass motherfucker, who pissed on my fucking code. That's right, he took his pencil fuckin' quilly fingers out and he pissed on my fucking code, and he said his finger was 'THIS BIG', and I said that's disgusting, so I'm making a callout post on my Twitter-dot-com, Thomas the Pencil, you got a small finger, it's the size of this null string except WAY smaller. And guess what? Here's what my code looks like! THAT'S RIGHT, BABY. TALL SWITCHES, NO NULLS, NO IFS, LOOK AT THAT, IT LOOKS LIKE TWO BALLS AND A BONG. He fucked my code, so guess what? I'M GONNA FUCK THE GITHUB! That's right, this is what you get! MY SUPER LASER INT! Except I'm not gonna string on the earth. I'm gonna go higher. I'M STRINGING ON THE MOON! How do you like that, KITTENCHILLY? I STRINGED ON THE MOON, YOU IDIOT! You have TWENTY THREE HOURS before the int DRRRRRROPLETS hit the fucking github, now get out of my fucking sight before I string on you too"; //My Revenge for thomas making me weakref this shit.
-        private bool CalamityNPC(NPC npc)
-        {
-            if (npc.modNPC != null)
-            {
-                if (npc.modNPC.mod.Name == "CalamityMod")
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
+        private static string NoteToEveryone = "Plant is the big stupid"; // someday I will not be the only one who knows weakrefs and reflection  -Thomas
     }
 }

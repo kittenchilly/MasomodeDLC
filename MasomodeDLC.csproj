@@ -18,7 +18,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="CalamityMod">
-      <HintPath>..\..\Mod Reader\CalamityMod.XNA.dll</HintPath>
+      <HintPath>..\..\references\mods\CalamityMod.dll</HintPath>
     </Reference>
     <Reference Include="FargowiltasSouls">
       <HintPath>..\..\references\mods\Fargowiltas.dll</HintPath>

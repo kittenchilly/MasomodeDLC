@@ -4,3 +4,7 @@ version = 0.125
 modReferences = Fargowiltas, FargowiltasSouls
 weakReferences = ThoriumMod@1.6.1.4, CalamityMod@1.4.3.1
 sortAfter = ThoriumMod, CalamityMod, Fargowiltas
+includePDB = true
+hideResources = true
+hideCode = true
+buildIgnore = build.txt, .gitattributes, .gitignore, .git/, .vs/, .idea/, bin/, obj/, Thumbs.db, *.csproj, .cs, .sln, Calamity/

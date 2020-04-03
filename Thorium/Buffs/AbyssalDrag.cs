@@ -8,7 +8,7 @@ namespace MasomodeDLC.Thorium.Buffs
 		public override bool Autoload(ref string name, ref string texture)
 		{
 			texture = "FargowiltasSouls/Buffs/PlaceholderDebuff";
-			return true;
+			return ModLoader.GetMod("ThoriumMod") != null;
 		}
 
 		public override void SetDefaults()

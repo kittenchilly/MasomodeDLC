@@ -3,6 +3,9 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+# ignore calameme until thomas fixes shit
+Calamity/
+
 # User-specific files
 *.rsuser
 *.suo

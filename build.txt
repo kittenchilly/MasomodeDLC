@@ -7,4 +7,3 @@ sortAfter = ThoriumMod, CalamityMod, Fargowiltas
 includePDB = true
 hideResources = true
 hideCode = true
-buildIgnore = build.txt, .gitattributes, .gitignore, .git/, .vs/, .idea/, bin/, obj/, Thumbs.db, *.csproj, .cs, .sln, Calamity/

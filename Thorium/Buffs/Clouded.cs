@@ -21,10 +21,5 @@ namespace MasomodeDLC.Thorium.Buffs
 		{
 			player.GetModPlayer<MasoDLCPlayer>().displayClouds = true;
 		}
-
-		public override void Update(NPC npc, ref int buffIndex)
-		{
-			base.Update(npc, ref buffIndex);
-		}
 	}
 }

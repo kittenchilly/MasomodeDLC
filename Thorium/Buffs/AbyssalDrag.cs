@@ -20,7 +20,7 @@ namespace MasomodeDLC.Thorium.Buffs
 
 		public override void Update(Player player, ref int buffIndex)
 		{
-			base.Update(player, ref buffIndex);
+			player.GetModPlayer<MasoDLCPlayer>().abyssalDrag = true;
 		}
 	}
 }

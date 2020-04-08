@@ -8,6 +8,7 @@ using CalamityMod.NPCs.NormalNPCs;
 using CalamityMod.NPCs.Perforator;
 using CalamityMod.NPCs.SlimeGod;
 using CalamityMod.NPCs.SunkenSea;
+using CalamityMod.NPCs.Crags;
 using CalamityMod.Projectiles.Melee;
 using CalamityMod.World;
 using FargowiltasSouls;

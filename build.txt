@@ -1,4 +1,4 @@
-displayName = Masomode DLC
+displayName = Eternity Mode DLC
 author = kittenchilly, Planterror, ThomasthePencil, Oli.H
 version = 0.125
 modReferences = Fargowiltas, FargowiltasSouls

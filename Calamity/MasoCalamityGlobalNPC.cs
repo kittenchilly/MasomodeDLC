@@ -684,7 +684,7 @@ namespace MasomodeDLC.Calamity
                         MasoDLCWorld.IceCubeCount++;
                     }
 
-                    if (npc.type == NPCType<AquaticScourgeHead>() && MasoDLCWorld.SulphurousWormBossCount < MasoDLCWorld.clamMaxCountHM))
+                    if (npc.type == NPCType<AquaticScourgeHead>() && MasoDLCWorld.SulphurousWormBossCount < MasoDLCWorld.clamMaxCountHM)
                     {
                         MasoDLCWorld.SulphurousWormBossCount++;
                     }

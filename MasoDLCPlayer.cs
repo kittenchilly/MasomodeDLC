@@ -1,3 +1,4 @@
+using System;
 using System.Reflection;
 using MasomodeDLC.Calamity.Buffs;
 using MasomodeDLC.Thorium.Buffs;
@@ -10,7 +11,9 @@ namespace MasomodeDLC
 {
 	public class MasoDLCPlayer : ModPlayer
 	{
-		public int MinuteTimer = 60;
+        //references
+        public bool IsStandingStill;
+        public int MinuteTimer = 60;
 
 		private readonly Mod Thorium = ModLoader.GetMod("ThoriumMod");
 		private readonly Mod Calamity = ModLoader.GetMod("CalamityMod");
@@ -23,15 +26,19 @@ namespace MasomodeDLC
 		public bool creativeblank;
 		public bool displayClouds;
 		public bool abyssalDrag;
-		#endregion
-		#region Calamity
-		public bool voidVessel;
+        #endregion
+        #region Calamity
+        //calamity debuffs
+        public bool ArcaneShock;
+        public bool voidVessel;
 		public bool antimatterDoll;
 		#endregion
 		#endregion
 
 		public override void ResetEffects()
 		{
+            //debuffs
+            ArcaneShock = false;
 			teslasurge = false;
 			rubberWeapon = false;
 			wristpain = false;
@@ -160,8 +167,10 @@ namespace MasomodeDLC
 			}
 			#endregion
 		}
+
 		public override void UpdateDead()
 		{
+            ArcaneShock = false;
 			teslasurge = false;
 			rubberWeapon = false;
 			wristpain = false;
@@ -169,8 +178,27 @@ namespace MasomodeDLC
 			displayClouds = false;
 			abyssalDrag = false;
 		}
-		public override void UpdateBadLifeRegen()
+
+        public override void PreUpdate()
+        {
+            IsStandingStill = Math.Abs(player.velocity.X) < 0.05 && Math.Abs(player.velocity.Y) < 0.05;
+        }
+
+        public override void UpdateBadLifeRegen()
 		{
+            if (ArcaneShock)
+            {
+                if (player.lifeRegen > 0)
+                {
+                    player.lifeRegen = 0;
+                }
+                player.lifeRegenTime = 0;
+                player.lifeRegen -= 20;
+                if (!IsStandingStill)
+                {
+                    player.lifeRegen -= 200;
+                }
+            }
 			if (teslasurge)
 			{
 				if (player.lifeRegen > 0)
@@ -190,6 +218,7 @@ namespace MasomodeDLC
 				player.lifeRegen -= 16000000; // literally death
 			}
 		}
+
 		public override void DrawEffects(PlayerDrawInfo drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
 		{
 			if (teslasurge)

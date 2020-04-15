@@ -181,7 +181,7 @@ namespace MasomodeDLC
 
         public override void PreUpdate()
         {
-            IsStandingStill = Math.Abs(player.velocity.X) < 0.05 && Math.Abs(player.velocity.Y) < 0.05;
+            IsStandingStill = Math.Abs(player.velocity.X) == 0 && Math.Abs(player.velocity.Y) == 0;
         }
 
         public override void UpdateBadLifeRegen()

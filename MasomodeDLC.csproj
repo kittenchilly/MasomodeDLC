@@ -30,4 +30,7 @@
       <HintPath>..\..\references\mods\ThoriumMod.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="&quot;C:\Program Files (x86)\Steam\steamapps\common\Terraria\tModLoaderServer.exe&quot; -build &quot;$(ProjectDir)&quot;" />
+  </Target>
 </Project>

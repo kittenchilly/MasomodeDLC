@@ -1,14 +1,39 @@
 using CalamityMod.CalPlayer;
 using CalamityMod.Items.Materials;
 using CalamityMod.Items.Potions;
+using CalamityMod.NPCs.Abyss;
+using CalamityMod.NPCs.AcidRain;
+using CalamityMod.NPCs.AquaticScourge;
+using CalamityMod.NPCs.Astral;
+using CalamityMod.NPCs.AstrumAureus;
+using CalamityMod.NPCs.AstrumDeus;
+using CalamityMod.NPCs.BrimstoneElemental;
+using CalamityMod.NPCs.Bumblebirb;
+using CalamityMod.NPCs.Calamitas;
+using CalamityMod.NPCs.CeaselessVoid;
 using CalamityMod.NPCs.Crabulon;
-using CalamityMod.NPCs.DesertScourge;
-using CalamityMod.NPCs.HiveMind;
-using CalamityMod.NPCs.NormalNPCs;
-using CalamityMod.NPCs.Perforator;
-using CalamityMod.NPCs.SlimeGod;
-using CalamityMod.NPCs.SunkenSea;
 using CalamityMod.NPCs.Crags;
+using CalamityMod.NPCs.Cryogen;
+using CalamityMod.NPCs.DesertScourge;
+using CalamityMod.NPCs.DevourerofGods;
+using CalamityMod.NPCs.GreatSandShark;
+using CalamityMod.NPCs.HiveMind;
+using CalamityMod.NPCs.Leviathan;
+using CalamityMod.NPCs.NormalNPCs;
+using CalamityMod.NPCs.OldDuke;
+using CalamityMod.NPCs.Perforator;
+using CalamityMod.NPCs.PlaguebringerGoliath;
+using CalamityMod.NPCs.Polterghast;
+using CalamityMod.NPCs.ProfanedGuardians;
+using CalamityMod.NPCs.Providence;
+using CalamityMod.NPCs.Ravager;
+using CalamityMod.NPCs.Signus;
+using CalamityMod.NPCs.SlimeGod;
+using CalamityMod.NPCs.StormWeaver;
+using CalamityMod.NPCs.SunkenSea;
+using CalamityMod.NPCs.SupremeCalamitas;
+using CalamityMod.NPCs.TownNPCs;
+using CalamityMod.NPCs.Yharon;
 using CalamityMod.Projectiles.Melee;
 using CalamityMod.World;
 using FargowiltasSouls;
@@ -177,6 +202,12 @@ namespace MasomodeDLC.Calamity
                 if (Calamity != null)
                 {
                     #region Boss Scaling
+                    if((npc.type == NPCID.Probe) && NPC.AnyNPCs(NPCID.SkeletronPrime))
+                    {
+                        npc.lifeMax = (int)(npc.lifeMax * (1 + FargoSoulsWorld.PrimeCount * .025));
+                        npc.damage = (int)(npc.damage * (1 + FargoSoulsWorld.PrimeCount * .0125));
+                    }
+
                     if (npc.type == NPCType<DesertScourgeHead>() ||
                         npc.type == NPCType<DesertScourgeBody>() ||
                         npc.type == NPCType<DesertScourgeTail>() ||
@@ -243,11 +274,126 @@ namespace MasomodeDLC.Calamity
                         npc.type == NPCType<SlimeGodRun>() ||
                         npc.type == NPCType<SlimeGodRunSplit>() ||
                         npc.type == NPCType<SlimeSpawnCorrupt>() ||
+                        npc.type == NPCType<SlimeSpawnCorrupt2>() ||
                         npc.type == NPCType<SlimeSpawnCrimson>() ||
                         npc.type == NPCType<SlimeSpawnCrimson2>())
                     {
-                        npc.lifeMax = (int)(npc.lifeMax * (1 + MasoDLCWorld.BloodyWormBossesCount * .025));
-                        npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.BloodyWormBossesCount * .0125));
+                        npc.lifeMax = (int)(npc.lifeMax * (1 + MasoDLCWorld.TwoBiomeMimicsAndAFlockoCount * .025));
+                        npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.TwoBiomeMimicsAndAFlockoCount * .0125));
+                    }
+
+                    if (npc.type == NPCType<Cryocore>() ||
+                        npc.type == NPCType<Cryocore2>() ||
+                        npc.type == NPCType<Cryogen>() ||
+                        npc.type == NPCType<CryogenIce>() ||
+                        npc.type == NPCType<IceMass>())
+                    {
+                        npc.lifeMax = (int)(npc.lifeMax * (1 + MasoDLCWorld.IceCubeCount * .025));
+                        npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.IceCubeCount * .0125));
+                    }
+
+                    if (npc.type == NPCType<AquaticScourgeHead>() ||
+                        npc.type == NPCType<AquaticScourgeBody>() ||
+                        npc.type == NPCType<AquaticScourgeBodyAlt>() ||
+                        npc.type == NPCType<AquaticScourgeTail>())
+                    {
+                        npc.lifeMax = (int)(npc.lifeMax * (1 + MasoDLCWorld.SulphurousWormBossCount * .025));
+                        npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.SulphurousWormBossCount * .0125));
+                    }
+
+                    if ((npc.type == NPCType<AquaticParasite>() ||
+                        npc.type == NPCType<AquaticSeekerHead>() ||
+                        npc.type == NPCType<AquaticSeekerBody>() ||
+                        npc.type == NPCType<AquaticSeekerTail>() ||
+                        npc.type == NPCType<AquaticUrchin>()) && NPC.AnyNPCs(NPCType<AquaticScourgeHead>()))
+                    {
+                        npc.lifeMax = (int)(npc.lifeMax * (1 + MasoDLCWorld.SulphurousWormBossCount * .025));
+                        npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.SulphurousWormBossCount * .0125));
+                    }
+
+                    if (npc.type == NPCType<Brimling>() ||
+                        npc.type == NPCType<BrimstoneElemental>())
+                    {
+                        npc.lifeMax = (int)(npc.lifeMax * (1 + MasoDLCWorld.BrimboCount * .025));
+                        npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.BrimboCount * .0125));
+                    }
+
+                    if (npc.type == NPCType<Calamitas>() ||
+                        npc.type == NPCType<CalamitasRun>() ||
+                        npc.type == NPCType<CalamitasRun2>() ||
+                        npc.type == NPCType<CalamitasRun3>() ||
+                        npc.type == NPCType<LifeSeeker>() ||
+                        npc.type == NPCType<SoulSeeker>())
+                    {
+                        npc.lifeMax = (int)(npc.lifeMax * (1 + MasoDLCWorld.CalamitasCount * .025));
+                        npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.CalamitasCount * .0125));
+                    }
+
+                    if (npc.type == NPCType<AstrumAureus>() ||
+                        npc.type == NPCType<AureusSpawn>())
+                    {
+                        npc.lifeMax = (int)(npc.lifeMax * (1 + MasoDLCWorld.AuroraBorealisCount * .025));
+                        npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.AuroraBorealisCount * .0125));
+                    }
+
+                    if (npc.type == NPCType<Leviathan>() ||
+                        npc.type == NPCType<Siren>() ||
+                        npc.type == NPCType<SirenClone>() ||
+                        npc.type == NPCType<SirenIce>())
+                    {
+                        npc.lifeMax = (int)(npc.lifeMax * (1 + MasoDLCWorld.FatFishFucksCount * .025));
+                        npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.FatFishFucksCount * .0125));
+                    }
+
+                    if ((npc.type == NPCType<AquaticAberration>() ||
+                        npc.type == NPCType<Parasea>()) && NPC.AnyNPCs(NPCType<Leviathan>()))
+                    {
+                        npc.lifeMax = (int)(npc.lifeMax * (1 + MasoDLCWorld.FatFishFucksCount * .025));
+                        npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.FatFishFucksCount * .0125));
+                    }
+
+                    if (npc.type == NPCType<PlagueBeeG>() ||
+                        npc.type == NPCType<PlagueBeeLargeG>() ||
+                        npc.type == NPCType<PlaguebringerGoliath>() ||
+                        npc.type == NPCType<PlagueHomingMissile>() ||
+                        npc.type == NPCType<PlagueMine>())
+                    {
+                        npc.lifeMax = (int)(npc.lifeMax * (1 + MasoDLCWorld.PeanutButterGoliathCount * .025));
+                        npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.PeanutButterGoliathCount * .0125));
+                    }
+
+                    if ((npc.type == NPCType<PlaguebringerShade>()) && NPC.AnyNPCs(NPCType<PlaguebringerGoliath>()))
+                    {
+                        npc.lifeMax = (int)(npc.lifeMax * (1 + MasoDLCWorld.PeanutButterGoliathCount * .025));
+                        npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.PeanutButterGoliathCount * .0125));
+                    }
+
+                    if (npc.type == NPCType<FlamePillar>() ||
+                        npc.type == NPCType<RavagerBody>() ||
+                        npc.type == NPCType<RavagerClawLeft>() ||
+                        npc.type == NPCType<RavagerClawRight>() ||
+                        npc.type == NPCType<RavagerHead>() ||
+                        npc.type == NPCType<RavagerHead2>() ||
+                        npc.type == NPCType<RavagerLegLeft>() ||
+                        npc.type == NPCType<RavagerLegRight>() ||
+                        npc.type == NPCType<RockPillar>())
+                    {
+                        npc.lifeMax = (int)(npc.lifeMax * (1 + MasoDLCWorld.ScavengerCount * .025));
+                        npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.ScavengerCount * .0125));
+                    }
+
+                    if (npc.type == NPCType<AstrumDeusHead>() ||
+                        npc.type == NPCType<AstrumDeusBody>() ||
+                        npc.type == NPCType<AstrumDeusTail>() ||
+                        npc.type == NPCType<AstrumDeusHeadSpectral>() ||
+                        npc.type == NPCType<AstrumDeusBodySpectral>() ||
+                        npc.type == NPCType<AstrumDeusTailSpectral>() ||
+                        npc.type == NPCType<AstrumDeusProbe>() ||
+                        npc.type == NPCType<AstrumDeusProbe2>() ||
+                        npc.type == NPCType<AstrumDeusProbe3>())
+                    {
+                        npc.lifeMax = (int)(npc.lifeMax * (1 + MasoDLCWorld.StarGodWormBossCount * .025));
+                        npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.StarGodWormBossCount * .0125));
                     }
                     npc.GetGlobalNPC<MasoCalamityGlobalNPC>().CachedDamage = npc.damage;
                     #endregion
@@ -334,6 +480,121 @@ namespace MasomodeDLC.Calamity
                             npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.BloodyWormBossesCount * .0125));
                         }
 
+                        if (npc.type == NPCType<SlimeGodCore>() ||
+                            npc.type == NPCType<SlimeGod>() ||
+                            npc.type == NPCType<SlimeGodSplit>() ||
+                            npc.type == NPCType<SlimeGodRun>() ||
+                            npc.type == NPCType<SlimeGodRunSplit>() ||
+                            npc.type == NPCType<SlimeSpawnCorrupt>() ||
+                            npc.type == NPCType<SlimeSpawnCorrupt2>() ||
+                            npc.type == NPCType<SlimeSpawnCrimson>() ||
+                            npc.type == NPCType<SlimeSpawnCrimson2>())
+                        {
+                            npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.TwoBiomeMimicsAndAFlockoCount * .0125));
+                        }
+
+                        if (npc.type == NPCType<Cryocore>() ||
+                            npc.type == NPCType<Cryocore2>() ||
+                            npc.type == NPCType<Cryogen>() ||
+                            npc.type == NPCType<CryogenIce>() ||
+                            npc.type == NPCType<IceMass>())
+                        {
+                            npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.IceCubeCount * .0125));
+                        }
+
+                        if (npc.type == NPCType<AquaticScourgeHead>() ||
+                            npc.type == NPCType<AquaticScourgeBody>() ||
+                            npc.type == NPCType<AquaticScourgeBodyAlt>() ||
+                            npc.type == NPCType<AquaticScourgeTail>())
+                        {
+                            npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.SulphurousWormBossCount * .0125));
+                        }
+
+                        if ((npc.type == NPCType<AquaticParasite>() ||
+                            npc.type == NPCType<AquaticSeekerHead>() ||
+                            npc.type == NPCType<AquaticSeekerBody>() ||
+                            npc.type == NPCType<AquaticSeekerTail>() ||
+                            npc.type == NPCType<AquaticUrchin>()) && NPC.AnyNPCs(NPCType<AquaticScourgeHead>()))
+                        {
+                            npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.SulphurousWormBossCount * .0125));
+                        }
+
+                        if (npc.type == NPCType<Brimling>() ||
+                            npc.type == NPCType<BrimstoneElemental>())
+                        {
+                            npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.BrimboCount * .0125));
+                        }
+
+                        if (npc.type == NPCType<Calamitas>() ||
+                            npc.type == NPCType<CalamitasRun>() ||
+                            npc.type == NPCType<CalamitasRun2>() ||
+                            npc.type == NPCType<CalamitasRun3>() ||
+                            npc.type == NPCType<LifeSeeker>() ||
+                            npc.type == NPCType<SoulSeeker>())
+                        {
+                            npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.CalamitasCount * .0125));
+                        }
+
+                        if (npc.type == NPCType<AstrumAureus>() ||
+                            npc.type == NPCType<AureusSpawn>())
+                        {
+                            npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.AuroraBorealisCount * .0125));
+                        }
+
+                        if (npc.type == NPCType<Leviathan>() ||
+                            npc.type == NPCType<Siren>() ||
+                            npc.type == NPCType<SirenClone>() ||
+                            npc.type == NPCType<SirenIce>())
+                        {
+                            npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.FatFishFucksCount * .0125));
+                        }
+
+                        if ((npc.type == NPCType<AquaticAberration>() ||
+                            npc.type == NPCType<Parasea>()) && NPC.AnyNPCs(NPCType<Leviathan>()))
+                        {
+                            npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.FatFishFucksCount * .0125));
+                        }
+
+                        if (npc.type == NPCType<PlagueBeeG>() ||
+                            npc.type == NPCType<PlagueBeeLargeG>() ||
+                            npc.type == NPCType<PlaguebringerGoliath>() ||
+                            npc.type == NPCType<PlagueHomingMissile>() ||
+                            npc.type == NPCType<PlagueMine>())
+                        {
+                            npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.PeanutButterGoliathCount * .0125));
+                        }
+
+                        if ((npc.type == NPCType<PlaguebringerShade>()) && NPC.AnyNPCs(NPCType<PlaguebringerGoliath>()))
+                        {
+                            npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.PeanutButterGoliathCount * .0125));
+                        }
+
+                        if (npc.type == NPCType<FlamePillar>() ||
+                            npc.type == NPCType<RavagerBody>() ||
+                            npc.type == NPCType<RavagerClawLeft>() ||
+                            npc.type == NPCType<RavagerClawRight>() ||
+                            npc.type == NPCType<RavagerHead>() ||
+                            npc.type == NPCType<RavagerHead2>() ||
+                            npc.type == NPCType<RavagerLegLeft>() ||
+                            npc.type == NPCType<RavagerLegRight>() ||
+                            npc.type == NPCType<RockPillar>())
+                        {
+                            npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.ScavengerCount * .0125));
+                        }
+
+                        if (npc.type == NPCType<AstrumDeusHead>() ||
+                            npc.type == NPCType<AstrumDeusBody>() ||
+                            npc.type == NPCType<AstrumDeusTail>() ||
+                            npc.type == NPCType<AstrumDeusHeadSpectral>() ||
+                            npc.type == NPCType<AstrumDeusBodySpectral>() ||
+                            npc.type == NPCType<AstrumDeusTailSpectral>() ||
+                            npc.type == NPCType<AstrumDeusProbe>() ||
+                            npc.type == NPCType<AstrumDeusProbe2>() ||
+                            npc.type == NPCType<AstrumDeusProbe3>())
+                        {
+                            npc.damage = (int)(npc.damage * (1 + MasoDLCWorld.StarGodWormBossCount * .0125));
+                        }
+
                         CachedDamage = npc.damage;
                     }
                 }
@@ -416,6 +677,56 @@ namespace MasomodeDLC.Calamity
                     if (npc.type == NPCType<SlimeGodRunSplit>() && npc.boss && (!NPC.AnyNPCs(NPCType<SlimeGodCore>()) || !NPC.AnyNPCs(NPCType<SlimeGodSplit>()) || NPC.CountNPCS(NPCType<SlimeGodRunSplit>()) < 2) && MasoDLCWorld.TwoBiomeMimicsAndAFlockoCount < MasoDLCWorld.clamMaxCountPreHM)
                     {
                         MasoDLCWorld.TwoBiomeMimicsAndAFlockoCount++;
+                    }
+
+                    if (npc.type == NPCType<Cryogen>() && MasoDLCWorld.IceCubeCount < MasoDLCWorld.clamMaxCountHM)
+                    {
+                        MasoDLCWorld.IceCubeCount++;
+                    }
+
+                    if (npc.type == NPCType<AquaticScourgeHead>() && MasoDLCWorld.SulphurousWormBossCount < MasoDLCWorld.clamMaxCountHM)
+                    {
+                        MasoDLCWorld.SulphurousWormBossCount++;
+                    }
+
+                    if (npc.type == NPCType<BrimstoneElemental>() && MasoDLCWorld.BrimboCount < MasoDLCWorld.clamMaxCountHM)
+                    {
+                        MasoDLCWorld.BrimboCount++;
+                    }
+
+                    if (npc.type == NPCType<CalamitasRun3>() && MasoDLCWorld.CalamitasCount < MasoDLCWorld.clamMaxCountHM)
+                    {
+                        MasoDLCWorld.CalamitasCount++;
+                    }
+
+                    if (npc.type == NPCType<AstrumAureus>() && MasoDLCWorld.AuroraBorealisCount < MasoDLCWorld.clamMaxCountHM)
+                    {
+                        MasoDLCWorld.AuroraBorealisCount++;
+                    }
+
+                    if (npc.type == NPCType<Leviathan>() && !NPC.AnyNPCs(NPCType<Siren>()) && MasoDLCWorld.FatFishFucksCount < MasoDLCWorld.clamMaxCountHM)
+                    {
+                        MasoDLCWorld.FatFishFucksCount++;
+                    }
+
+                    if (npc.type == NPCType<Siren>() && !NPC.AnyNPCs(NPCType<Leviathan>()) && MasoDLCWorld.FatFishFucksCount < MasoDLCWorld.clamMaxCountHM)
+                    {
+                        MasoDLCWorld.FatFishFucksCount++;
+                    }
+
+                    if (npc.type == NPCType<PlaguebringerGoliath>() && MasoDLCWorld.PeanutButterGoliathCount < MasoDLCWorld.clamMaxCountHM)
+                    {
+                        MasoDLCWorld.PeanutButterGoliathCount++;
+                    }
+
+                    if (npc.type == NPCType<RavagerBody>() && MasoDLCWorld.ScavengerCount < MasoDLCWorld.clamMaxCountHM)
+                    {
+                        MasoDLCWorld.ScavengerCount++;
+                    }
+
+                    if (npc.type == NPCType<AstrumDeusHeadSpectral>() && MasoDLCWorld.StarGodWormBossCount < MasoDLCWorld.clamMaxCountHM)
+                    {
+                        MasoDLCWorld.StarGodWormBossCount++;
                     }
                 }
             }

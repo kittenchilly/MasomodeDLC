@@ -16,7 +16,13 @@ namespace MasomodeDLC.Calamity.Buffs
 			longerExpertDebuff = false;
 		}
 
-		public override void Update(Player player, ref int buffIndex)
+        public override bool Autoload(ref string name, ref string texture)
+        {
+            texture = "MasomodeDLC/Calamity/PlaceholderCalamityDebuff.png";
+            return true;
+        }
+
+        public override void Update(Player player, ref int buffIndex)
 		{
 			Main.buffNoTimeDisplay[Type] = player.buffTime[buffIndex] >= 18000;
 		}

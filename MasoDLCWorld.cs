@@ -20,6 +20,7 @@ namespace MasomodeDLC
         public static int RagnarokCount;
 
         public const int clamMaxCountPreHM = 560;
+        public const int clamMaxCountHM = 240;
 
         public static int DesertWormBossCount;
         public static int CrabRaveCount;

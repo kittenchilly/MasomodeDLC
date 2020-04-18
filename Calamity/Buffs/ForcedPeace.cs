@@ -9,7 +9,7 @@ namespace MasomodeDLC.Calamity.Buffs
 		{
 			DisplayName.SetDefault("Forced Peace");
 			Description.SetDefault("sanctuary");
-			Main.debuff[Type] = false;
+			Main.debuff[Type] = true;
 			Main.pvpBuff[Type] = true;
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;

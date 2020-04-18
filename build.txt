@@ -1,8 +1,8 @@
 displayName = Eternity Mode DLC
-author = kittenchilly, Planterror, ThomasthePencil, Oli.H
+author = kittenchilly, Planterror, ThomasThePencil, Oli.H
 version = 0.125
 modReferences = Fargowiltas, FargowiltasSouls
-weakReferences = ThoriumMod@1.6.1.4, CalamityMod@1.4.3.1
+weakReferences = ThoriumMod@1.6.2.1, CalamityMod@1.4.4.2
 sortAfter = ThoriumMod, CalamityMod, Fargowiltas
 includePDB = true
 hideResources = true

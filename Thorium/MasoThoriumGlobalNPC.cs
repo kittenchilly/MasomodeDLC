@@ -27,6 +27,7 @@ using ThoriumMod.NPCs.QueenJelly;
 using ThoriumMod.NPCs.Scouter;
 using ThoriumMod.NPCs.Thunder;
 using ThoriumMod.Projectiles.Boss;
+using static FargowiltasSouls.NPCs.EModeGlobalNPC;
 using static Terraria.ModLoader.ModContent;
 
 
@@ -69,7 +70,7 @@ namespace MasomodeDLC.Thorium
 		public bool teslasurge;
 		public override void SetDefaults(NPC npc)
 		{
-			FargoSoulsGlobalNPC fargoSoulsGlobalNPC = npc.GetGlobalNPC<FargoSoulsGlobalNPC>();
+			EModeGlobalNPC eModeGlobalNPC = npc.GetGlobalNPC<EModeGlobalNPC>();
 
 			if (FargoSoulsWorld.MasochistMode)
 			{
@@ -113,36 +114,36 @@ namespace MasomodeDLC.Thorium
 					 || npc.type == NPCType<VampireSquid>()
 					 || npc.type == NPCType<EelHead>() || npc.type == NPCType<EelBody>() || npc.type == NPCType<EelTail>())
 					{
-						fargoSoulsGlobalNPC.isWaterEnemy = true;
+						eModeGlobalNPC.isWaterEnemy = true;
 					}
 
-					if (npc.type == NPCType<SnowBall>()
-					 || npc.type == NPCType<SnowEater>()
-					 || npc.type == NPCType<SnowElemental>()
-					 || npc.type == NPCType<SnowSinga>()
-					 || npc.type == NPCType<SnowyOwl>()
-					 || npc.type == NPCType<FrostBurnt>()
-					 || npc.type == NPCType<FrostBurntFlayer>()
-					 || npc.type == NPCType<FrostFang>()
-					 || npc.type == NPCType<FrostFangWall>()
-					 || npc.type == NPCType<BlizzardBat>()
-					 || npc.type == NPCType<IceBoulderMimic>()
-					 || npc.type == NPCType<FrostyWisp>()
-					 || npc.type == NPCType<ChilledCannon>()
-					 || npc.type == NPCType<ChilledSpitter>()
-					 || npc.type == NPCType<Freezer>()
-					 || npc.type == NPCType<FrostWormHead>() || npc.type == NPCType<FrostWormBody>() || npc.type == NPCType<FrostWormTail>()
-					 || npc.type == NPCType<Coolmera>()
-					 || npc.type == NPCType<FrozenFace>()
-					 || npc.type == NPCType<FrozenGross>()
-					 || npc.type == NPCType<Coldling>())
+					//if (npc.type == NPCType<SnowBall>()
+					// || npc.type == NPCType<SnowEater>()
+					// || npc.type == NPCType<SnowElemental>()
+					// || npc.type == NPCType<SnowSinga>()
+					// || npc.type == NPCType<SnowyOwl>()
+					// || npc.type == NPCType<FrostBurnt>()
+					// || npc.type == NPCType<FrostBurntFlayer>()
+					// || npc.type == NPCType<FrostFang>()
+					// || npc.type == NPCType<FrostFangWall>()
+					// || npc.type == NPCType<BlizzardBat>()
+					// || npc.type == NPCType<IceBoulderMimic>()
+					// || npc.type == NPCType<FrostyWisp>()
+					// || npc.type == NPCType<ChilledCannon>()
+					// || npc.type == NPCType<ChilledSpitter>()
+					// || npc.type == NPCType<Freezer>()
+					// || npc.type == NPCType<FrostWormHead>() || npc.type == NPCType<FrostWormBody>() || npc.type == NPCType<FrostWormTail>()
+					// || npc.type == NPCType<Coolmera>()
+					// || npc.type == NPCType<FrozenFace>()
+					// || npc.type == NPCType<FrozenGross>()
+					// || npc.type == NPCType<Coldling>())
 
-						if (npc.type == NPCType<Nestling>()
-						 || npc.type == NPCType<WindElemental>()
-						 || npc.type == NPCType<CyanHag>())
-						{
-							npc.buffImmune[BuffID.Suffocation] = true;
-						}
+					if (npc.type == NPCType<Nestling>()
+					|| npc.type == NPCType<WindElemental>()
+					|| npc.type == NPCType<CyanHag>())
+					{
+						npc.buffImmune[BuffID.Suffocation] = true;
+					}
 
 					if (npc.type == NPCType<RedHag>()
 					 || npc.type == NPCType<BoneFlayer>()
@@ -1046,7 +1047,7 @@ namespace MasomodeDLC.Thorium
 							}
 							if (NPC.downedBoss1)
 							{
-								if (desert && rain && !sinisterIcon && !FargoSoulsGlobalNPC.AnyBossAlive())
+								if (desert && rain && !sinisterIcon && !EModeGlobalNPC.AnyBossAlive())
 								{
 									pool[NPCType<TheGrandThunderBirdv2>()] = .002f;
 								}
